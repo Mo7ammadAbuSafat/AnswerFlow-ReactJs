@@ -1,0 +1,94 @@
+.welcomePage{
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    background: linear-gradient(320deg, #D4E7FE -30%, #FFFFFF 70%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 150px;
+}
+
+.textSide h1{
+    width: 520px;
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 66px;
+    color: #0A093D;
+}
+
+.textSide p{
+    width: 600px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #656464;
+    margin-bottom: 35px;
+}
+
+.welcomePage img{
+    width: 50%;
+}
+
+@media screen and (max-width:1500px){
+    .welcomePage img{
+        width: 45%;
+    }
+    .textSide h1{
+        width: 480px;
+        font-weight: 700;
+        font-size: 45px;
+    }
+    
+    .textSide p{
+        width: 550px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width:1200px){
+    .welcomePage img{
+        width: 40%;
+    }
+    .textSide h1{
+        width: 450px;
+        font-weight: 700;
+        font-size: 40px;
+    }
+    
+    .textSide p{
+        width: 500px;
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width:1000px){
+    .welcomePage{
+        flex-direction: column;
+        justify-content: center;
+        padding: 50px 70px;
+    }
+    .welcomePage img{
+        width: 60%;
+        margin-top: 30px;
+        margin-left: -17px;
+    }
+}
+
+@media screen and (max-width:600px){
+    .welcomePage img{
+        width: 100%;
+
+    }
+    .textSide h1{
+        width: 300px;
+        line-height: 45px;
+        font-weight: 700;
+        font-size: 25px;
+    }
+    
+    .textSide p{
+        width: 350px;
+        line-height: 18px;
+        font-size: 12px;
+    }
+}
