@@ -1,19 +1,23 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WelcomePage from "./Pages/WelcomePage/WelcomePage";
-import Footer from "./Components/Footer/Footer";
 import HomePage from "./Pages/HomePage";
+import SignUpPage from "./Pages/SignPages/SignUpPage";
+import SignInPage from "./Pages/SignPages/SignInPage";
+import AboutUsPage from "./Pages/AboutUsPage/AboutUsPage";
+import NotFoundPage from "./Pages/NotFoundPage";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route index element={<HomePage />} />
-          <Route path="welcomePage" element={<WelcomePage />} />
-          <Route path="*" element={<div>error 404</div>} />
+          <Route index element={<WelcomePage />} />
+          <Route path="signUpPage" element={<SignUpPage />} />
+          <Route path="signInPage" element={<SignInPage />} />
+          <Route path="aboutUsPage" element={<AboutUsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </>
   );

@@ -16,7 +16,7 @@
 }
 
 .navbar img{
-    width: 180px;
+    width: 170px;
 }
 
 @media screen and (max-width:800px){
@@ -25,17 +25,23 @@
     }
 }
 
-@media screen and (max-width:550px){
+@media screen and (max-width:580px){
     .navbar{
         padding: 0 50px;
     }
 }
 
-@media screen and (max-width:400px){
+@media screen and (max-width:480px){
     .navbar{
-        padding: 0 50px;
+        padding: 0 10px;
     }
     .navbar img{
         width: 140px;
+    }
+}
+
+@media screen and (max-width:380px){
+    .navbar img{
+        width: 100px;
     }
 }
