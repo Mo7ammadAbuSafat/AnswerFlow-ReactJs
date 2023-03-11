@@ -2,12 +2,12 @@ import { Button } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
-import styles from "./AboutUsPage.module.css";
+import styles from "./Sign.module.css";
 
-const AboutUsPage = () => {
+const SignContainer = ({ children }) => {
   const navigate = useNavigate();
   return (
-    <div className={styles.aboutUsPage}>
+    <>
       <Navbar>
         <Button
           sx={{
@@ -21,11 +21,21 @@ const AboutUsPage = () => {
           size="medium"
           onClick={() => navigate("/")}
         >
-          Back
+          Home
         </Button>
       </Navbar>
-    </div>
+      <div className={styles.sign}>
+        <div className={styles.container}>
+          <img
+            onClick={() => navigate("/")}
+            src="/Assets/AnswerFlowBlueSign.png"
+            alt=""
+          />
+          {children}
+        </div>
+      </div>
+    </>
   );
 };
 
-export default AboutUsPage;
+export default SignContainer;

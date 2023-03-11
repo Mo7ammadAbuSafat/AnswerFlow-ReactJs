@@ -12,7 +12,13 @@ const WelcomePage = (props) => {
       <Navbar>
         <div>
           <Button
-            sx={{ height: "40px", color: "white", borderColor: "white" }}
+            sx={{
+              textTransform: "none",
+              height: "40px",
+              color: "white",
+              borderColor: "white",
+              backgroundColor: "#ffaf2e",
+            }}
             variant="outlined"
             size="medium"
             onClick={() => navigate("/signUpPage")}
@@ -21,6 +27,7 @@ const WelcomePage = (props) => {
           </Button>
           <Button
             sx={{
+              textTransform: "none",
               height: "40px",
               color: "white",
               borderColor: "white",
@@ -38,20 +45,30 @@ const WelcomePage = (props) => {
         <div className={styles.textSide}>
           <h1>Find Your Answers In Our Community!</h1>
           <p>
-            Computer systems engineering students at Kadoorie University in one
+            Computer Systems Engineering Students at Kadoorie University in one
             place, where they exchange experiences with each other.
             <br />
             What are you waiting for! ...... Join us now!
           </p>
           <div className={styles.buttons}>
             <Button
-              sx={{ background: "#4489f8", marginRight: "50px" }}
+              sx={{
+                width: "140px",
+                background: "#4489f8",
+                marginRight: "50px",
+                textTransform: "none",
+              }}
               variant="contained"
               size="large"
             >
               {"Get Started"}
             </Button>
-            <Button variant="outlined" size="large">
+            <Button
+              sx={{ width: "140px", textTransform: "none" }}
+              onClick={() => navigate("/aboutUsPage")}
+              variant="outlined"
+              size="large"
+            >
               {"About Us"}
             </Button>
           </div>

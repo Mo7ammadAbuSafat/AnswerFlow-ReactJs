@@ -6,6 +6,7 @@ import SignUpPage from "./Pages/SignPages/SignUpPage";
 import SignInPage from "./Pages/SignPages/SignInPage";
 import AboutUsPage from "./Pages/AboutUsPage/AboutUsPage";
 import NotFoundPage from "./Pages/NotFoundPage";
+import VerifyEmailPage from "./Pages/SignPages/VerifyEmailPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route index element={<WelcomePage />} />
           <Route path="signUpPage" element={<SignUpPage />} />
           <Route path="signInPage" element={<SignInPage />} />
+          <Route path="verifyEmailPage" element={<VerifyEmailPage />} />
           <Route path="aboutUsPage" element={<AboutUsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
