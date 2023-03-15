@@ -58,6 +58,7 @@ const WelcomePage = (props) => {
                 marginRight: "50px",
                 textTransform: "none",
               }}
+              onClick={() => navigate("/feedPage")}
               variant="contained"
               size="large"
             >
