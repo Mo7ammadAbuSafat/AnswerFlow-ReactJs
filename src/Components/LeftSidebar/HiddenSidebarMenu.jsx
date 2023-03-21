@@ -15,30 +15,49 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DynamicFeedTwoToneIcon from "@mui/icons-material/DynamicFeedTwoTone";
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../Store/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
-const HiddenSidebarMenu = () => {
+const HiddenSidebarMenu = ({ selectedLabel }) => {
   const listData = [
     { icon: <DynamicFeedTwoToneIcon />, label: "Feed" },
     { icon: <QuestionMarkIcon />, label: "Questions" },
     { icon: <ArticleIcon />, label: "Articles" },
     { icon: <StyleIcon />, label: "Tags" },
     { icon: <SearchIcon />, label: "Search" },
-    { icon: <PersonIcon />, label: "Profile" },
     { icon: <SettingsIcon />, label: "Setting" },
     { icon: <InfoIcon />, label: "About" },
-    { icon: <LogoutIcon />, label: "Logout" },
   ];
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+  if (authContext.isLoggedIn) {
+    listData.push({ icon: <PersonIcon />, label: "Profile" });
+    listData.push({ icon: <LogoutIcon />, label: "Logout" });
+  }
   const listItems = listData.map((item) => {
     return (
-      <ListItem disablePadding>
-        <ListItemButton>
+      <ListItem disablePadding selected={selectedLabel === item.label}>
+        <ListItemButton
+          onClick={
+            item.label === "Logout"
+              ? () => {
+                  handleLogoutClick();
+                }
+              : ""
+          }
+        >
           <ListItemIcon>{item.icon}</ListItemIcon>
           <ListItemText primary={item.label} />
         </ListItemButton>
       </ListItem>
     );
   });
+
+  const handleLogoutClick = () => {
+    authContext.logout();
+    navigate("/signInPage");
+  };
   return (
     <Box padding={"20px"}>
       <List>{listItems}</List>

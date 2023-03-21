@@ -7,6 +7,7 @@ import NotFoundPage from "./Pages/NotFoundPage";
 import VerifyEmailPage from "./Pages/SignPages/VerifyEmailPage";
 import FeedPage from "./Pages/FeedPage/FeedPage";
 import ResetPasswordPage from "./Pages/SignPages/ResetPasswordPage";
+import SuccessAlert from "./Components/SuccessAlert";
 
 function App() {
   return (
@@ -16,14 +17,14 @@ function App() {
           <Route index element={<WelcomePage />} />
           <Route path="signUpPage" element={<SignUpPage />} />
           <Route path="signInPage" element={<SignInPage />} />
-          <Route path="verifyEmailPage" element={<VerifyEmailPage />} />
+          <Route path="verifyEmailPage/:userId" element={<VerifyEmailPage />} />
           <Route path="resetPasswordPage" element={<ResetPasswordPage />} />
           <Route path="aboutUsPage" element={<AboutUsPage />} />
           <Route path="feedPage" element={<FeedPage />} />
-
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
+      <SuccessAlert />
     </>
   );
 }

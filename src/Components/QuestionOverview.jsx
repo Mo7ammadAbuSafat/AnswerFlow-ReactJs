@@ -13,15 +13,14 @@ import { Chip, ListItem, ListItemText, Stack } from "@mui/material";
 import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import { BsFillCaretUpFill, BsFillCaretDownFill } from "react-icons/bs";
 import CommentIcon from "@mui/icons-material/Comment";
-import { Box } from "@mui/system";
 
-const QuestionOverview = () => {
+const QuestionOverview = ({ questionData }) => {
   return (
     <Card sx={{ maxWidth: 800, minWidth: 250 }}>
       <CardHeader
         avatar={
           <Avatar
-            src="/Assets/avatarEx.jpg"
+            src={questionData.user.imageUrl}
             sx={{ bgcolor: "#4489f8" }}
             aria-label="recipe"
           ></Avatar>
@@ -31,8 +30,8 @@ const QuestionOverview = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Mohammad AbuSafat"
-        subheader="September 14, 2022"
+        title={questionData.user.name}
+        subheader={questionData.creationDate}
       />
       <CardContent sx={{ padding: "0" }}>
         <Stack direction={"row"} justifyContent={"left"}>
@@ -45,14 +44,11 @@ const QuestionOverview = () => {
               <BsFillCaretUpFill size={"30px"} color={"#757575"} />
             </IconButton>
             <Typography component="span" sx={{ fontSize: "25px" }}>
-              54
+              {questionData.votesSum}
             </Typography>
             <IconButton>
               <BsFillCaretDownFill size={"30px"} color={"#757575"} />
             </IconButton>
-            <DoneTwoToneIcon
-              sx={{ fontSize: "35px", color: "green", marginTop: "5px" }}
-            />
           </Stack>
           <Stack spacing={1.5} maxWidth={600} sx={{ paddingRight: "10px" }}>
             <p
@@ -62,8 +58,7 @@ const QuestionOverview = () => {
                 fontWeight: "400",
               }}
             >
-              How to disable secure file priv as a read only variable on MySQL
-              on mac?
+              {questionData.title}
             </p>
             <p
               style={{
@@ -75,28 +70,17 @@ const QuestionOverview = () => {
                 textOverflow: "ellipsis",
               }}
             >
-              How to disable secure file priv as a read only variable on MySQL
-              on mac?
+              {questionData.body}
             </p>
             <Stack direction={"row"} spacing={1}>
-              <Chip
-                label="Java"
-                sx={{ fontSize: "10px", margin: "3px" }}
-                size={"small"}
-                color={"success"}
-              />
-              <Chip
-                label="Python"
-                sx={{ fontSize: "10px" }}
-                size={"small"}
-                color={"default"}
-              />
-              <Chip
-                label="Database"
-                sx={{ fontSize: "10px" }}
-                size={"small"}
-                color={"default"}
-              />
+              {questionData.tags.map((tag) => {
+                <Chip
+                  label={tag}
+                  sx={{ fontSize: "10px" }}
+                  size={"small"}
+                  color={"default"}
+                />;
+              })}
             </Stack>
           </Stack>
         </Stack>
@@ -114,6 +98,15 @@ const QuestionOverview = () => {
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
+          {questionData.confirmed && (
+            <DoneTwoToneIcon
+              sx={{
+                fontSize: "35px",
+                color: "green",
+                marginLeft: "5px",
+              }}
+            />
+          )}
         </CardActions>
         <Stack
           spacing={1}
@@ -123,7 +116,7 @@ const QuestionOverview = () => {
           color={"#757575"}
         >
           <CommentIcon />
-          <ListItemText primary="0" />
+          <ListItemText primary={questionData.noOfAnswers} />
         </Stack>
       </Stack>
     </Card>
