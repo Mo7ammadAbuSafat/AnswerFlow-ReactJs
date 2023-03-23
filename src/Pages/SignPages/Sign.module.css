@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background: linear-gradient(180deg, #D4E7FE -40%, #FFFFFF 60%);
 }
 
 .sign .container{
@@ -13,7 +13,7 @@
     width: 500px;
     background-color: white;
     border-radius: 30px;
-    box-shadow: -2px 4px 119px -14px rgba(0,0,0,0.75);
+    box-shadow: -2px 4px 119px -14px rgba(0,0,0,0.6);
 }
 
 .sign .container img{

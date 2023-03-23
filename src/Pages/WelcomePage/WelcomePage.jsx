@@ -1,44 +1,70 @@
 import { Button } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import styles from "./WelcomePage.module.css";
 import Footer from "../../Components/Footer/Footer";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../Components/Store/AuthProvider";
 
 const WelcomePage = (props) => {
   const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+  const handleLogoutClick = () => {
+    authContext.logout();
+    navigate("/signInPage");
+  };
+
   return (
     <>
       <Navbar>
         <div>
-          <Button
-            sx={{
-              textTransform: "none",
-              height: "40px",
-              color: "white",
-              borderColor: "white",
-              backgroundColor: "#ffaf2e",
-            }}
-            variant="outlined"
-            size="medium"
-            onClick={() => navigate("/signUpPage")}
-          >
-            Sign Up
-          </Button>
-          <Button
-            sx={{
-              textTransform: "none",
-              height: "40px",
-              color: "white",
-              borderColor: "white",
-              marginLeft: "10px",
-            }}
-            variant="outlined"
-            size="medium"
-            onClick={() => navigate("/signInPage")}
-          >
-            Sign In
-          </Button>
+          {authContext.isLoggedIn ? (
+            <Button
+              sx={{
+                textTransform: "none",
+                height: "40px",
+                color: "white",
+                borderColor: "white",
+                marginLeft: "10px",
+              }}
+              variant="outlined"
+              size="medium"
+              onClick={() => handleLogoutClick()}
+            >
+              Log out
+            </Button>
+          ) : (
+            <>
+              <Button
+                sx={{
+                  textTransform: "none",
+                  height: "40px",
+                  color: "white",
+                  borderColor: "white",
+                  backgroundColor: "#ffaf2e",
+                }}
+                variant="outlined"
+                size="medium"
+                onClick={() => navigate("/signUpPage")}
+              >
+                Sign Up
+              </Button>
+              <Button
+                sx={{
+                  textTransform: "none",
+                  height: "40px",
+                  color: "white",
+                  borderColor: "white",
+                  marginLeft: "10px",
+                }}
+                variant="outlined"
+                size="medium"
+                onClick={() => navigate("/signInPage")}
+              >
+                Sign In
+              </Button>
+            </>
+          )}
         </div>
       </Navbar>
       <div className={styles.welcomePage}>
@@ -48,7 +74,7 @@ const WelcomePage = (props) => {
             Computer Systems Engineering Students at Kadoorie University in one
             place, where they exchange experiences with each other.
             <br />
-            What are you waiting for! ...... Join us now!
+            What are you waiting for! ...... Join us now!{" "}
           </p>
           <div className={styles.buttons}>
             <Button
@@ -58,6 +84,7 @@ const WelcomePage = (props) => {
                 marginRight: "50px",
                 textTransform: "none",
               }}
+              onClick={() => navigate("/feedPage")}
               variant="contained"
               size="large"
             >

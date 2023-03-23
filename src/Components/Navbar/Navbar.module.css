@@ -1,4 +1,7 @@
 .navbar{
+    position: sticky;
+    top: 0;
+    z-index: 100;
     width: 100%;
     display: flex;
     align-items: center;
@@ -22,9 +25,31 @@
     cursor: pointer;
 }
 
-@media screen and (max-width:800px){
+.navDiv{
+    display: none;
+}
+
+@media screen and (max-width:1200px){
     .navbar{
-        padding: 0 90px;
+        padding: 0 80px;
+    }
+}
+@media screen and (max-width:900px){
+    .navbar{
+        padding: 0 50px;
+    }
+
+    .navImg{
+        display: none;
+    }
+
+    .navDiv{
+        display: flex;
+        align-items: center;
+    }
+    .navDiv img{
+        width:100px;
+        margin-left: 10px;
     }
 }
 
@@ -38,13 +63,7 @@
     .navbar{
         padding: 0 10px;
     }
-    .navbar img{
+    .navImg{
         width: 140px;
-    }
-}
-
-@media screen and (max-width:380px){
-    .navbar img{
-        width: 100px;
     }
 }

@@ -1,6 +1,7 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../Components/Footer/Footer";
 import Navbar from "../../Components/Navbar/Navbar";
 import styles from "./AboutUsPage.module.css";
 
@@ -24,6 +25,18 @@ const AboutUsPage = () => {
           Back
         </Button>
       </Navbar>
+      <div
+        style={{
+          height: "calc(100vh - 80px)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "50px",
+        }}
+      >
+        About Page
+      </div>
+      <Footer />
     </div>
   );
 };
