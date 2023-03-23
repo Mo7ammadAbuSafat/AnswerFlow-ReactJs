@@ -140,6 +140,7 @@ const SignInPage = () => {
           Password
         </InputLabel>
         <OutlinedInput
+          autoComplete="off"
           error={validationErrors.password !== " "}
           id="outlined-adornment-password"
           name="password"
@@ -189,7 +190,7 @@ const SignInPage = () => {
       </Button>
       <p>
         Forget Password?{" "}
-        <span onClick={() => navigate("/resetPasswordPage")}>
+        <span onClick={() => navigate("/resetPasswordPage1")}>
           Reset Password
         </span>
       </p>

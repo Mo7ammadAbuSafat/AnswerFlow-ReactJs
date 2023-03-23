@@ -6,8 +6,9 @@ import AboutUsPage from "./Pages/AboutUsPage/AboutUsPage";
 import NotFoundPage from "./Pages/NotFoundPage";
 import VerifyEmailPage from "./Pages/SignPages/VerifyEmailPage";
 import FeedPage from "./Pages/FeedPage/FeedPage";
-import ResetPasswordPage from "./Pages/SignPages/ResetPasswordPage";
 import SuccessAlert from "./Components/SuccessAlert";
+import ResetPasswordPage1 from "./Pages/SignPages/ResetPasswordPage1";
+import ResetPasswordPage2 from "./Pages/SignPages/ResetPasswordPage2";
 
 function App() {
   return (
@@ -18,7 +19,11 @@ function App() {
           <Route path="signUpPage" element={<SignUpPage />} />
           <Route path="signInPage" element={<SignInPage />} />
           <Route path="verifyEmailPage/:userId" element={<VerifyEmailPage />} />
-          <Route path="resetPasswordPage" element={<ResetPasswordPage />} />
+          <Route path="resetPasswordPage1" element={<ResetPasswordPage1 />} />
+          <Route
+            path="resetPasswordPage2/:userId"
+            element={<ResetPasswordPage2 />}
+          />
           <Route path="aboutUsPage" element={<AboutUsPage />} />
           <Route path="feedPage" element={<FeedPage />} />
           <Route path="*" element={<NotFoundPage />} />

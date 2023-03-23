@@ -84,7 +84,9 @@ const VerifyEmailPage = () => {
 
   return (
     <SignContainer>
-      <h1 style={{ color: "#656464" }}>Verify Your Email</h1>
+      <p style={{ color: "#656464" }}>
+        Enter the code that we sent to your email
+      </p>
       <TextField
         sx={{ width: "100%", margin: "10px 0 10px 0" }}
         label="The Code"
