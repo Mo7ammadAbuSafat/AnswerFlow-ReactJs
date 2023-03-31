@@ -56,13 +56,9 @@ const SignInPage = () => {
     password: Joi.string().required(),
   });
 
-  const validateInput = (input, inputSchema) => {
-    return inputSchema.validate(input);
-  };
-
   const onChange = (e) => {
     const { name, value } = e.target;
-    const validation = validateInput(value, signInSchema.extract(name));
+    const validation = signInSchema.extract(name).validate(value);
     if (validation.error) {
       setValidationErrors({
         ...validationErrors,
@@ -91,7 +87,7 @@ const SignInPage = () => {
           }
         )
         .then((response) => {
-          authContext.login(response.data.id);
+          authContext.login(response.data);
           alertStates.handleOpenSuccessAlert();
           navigate("/feedPage");
         })
@@ -109,7 +105,11 @@ const SignInPage = () => {
                 email: "this email is not exist",
               });
             } else if (errorMessage === "You must Verify your email") {
-              navigate("/verifyEmailPage");
+              axios
+                .get(`https://localhost:7127/api/users?email=${inputs.email}`)
+                .then((response) => {
+                  navigate(`/verifyEmailPage/${response.data.id}`);
+                });
             }
           } else {
             alert("Error: ", error.message);

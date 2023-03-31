@@ -5,10 +5,11 @@ import SignInPage from "./Pages/SignPages/SignInPage";
 import AboutUsPage from "./Pages/AboutUsPage/AboutUsPage";
 import NotFoundPage from "./Pages/NotFoundPage";
 import VerifyEmailPage from "./Pages/SignPages/VerifyEmailPage";
-import FeedPage from "./Pages/FeedPage/FeedPage";
+import FeedPage from "./Pages/FeedPage";
 import SuccessAlert from "./Components/SuccessAlert";
 import ResetPasswordPage1 from "./Pages/SignPages/ResetPasswordPage1";
 import ResetPasswordPage2 from "./Pages/SignPages/ResetPasswordPage2";
+import QuestionPage from "./Pages/QuestionPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           />
           <Route path="aboutUsPage" element={<AboutUsPage />} />
           <Route path="feedPage" element={<FeedPage />} />
+          <Route path="questionsPage/:questionId" element={<QuestionPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

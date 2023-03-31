@@ -2,22 +2,26 @@ import React from "react";
 import { useState, createContext } from "react";
 
 const AuthContext = createContext({
-  userId: null,
+  user: null,
   isLoggedIn: false,
   login: () => {},
   logout: () => {},
 });
 export const AuthContextProvider = (props) => {
-  const [userId, setUserId] = useState(null);
-  const userIsLoggedIn = !!userId;
-  const loginHandler = (userId) => {
-    setUserId(userId);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("authUser")) || null
+  );
+  const userIsLoggedIn = user !== null;
+  const loginHandler = (user) => {
+    setUser(user);
+    localStorage.setItem("authUser", JSON.stringify(user));
   };
   const logoutHandler = () => {
-    setUserId(null);
+    setUser(null);
+    localStorage.setItem("authUser", null);
   };
   const valueContext = {
-    userId: userId,
+    user: user,
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,
     logout: logoutHandler,

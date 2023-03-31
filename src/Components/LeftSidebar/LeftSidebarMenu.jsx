@@ -1,5 +1,4 @@
 import {
-  Box,
   List,
   ListItem,
   ListItemButton,
@@ -19,7 +18,9 @@ import React, { useContext } from "react";
 import AuthContext from "../Store/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
-const HiddenSidebarMenu = ({ selectedLabel }) => {
+const LeftSidebarMenu = ({ selectedLabel }) => {
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
   const listData = [
     { icon: <DynamicFeedTwoToneIcon />, label: "Feed" },
     { icon: <QuestionMarkIcon />, label: "Questions" },
@@ -29,16 +30,19 @@ const HiddenSidebarMenu = ({ selectedLabel }) => {
     { icon: <SettingsIcon />, label: "Setting" },
     { icon: <InfoIcon />, label: "About" },
   ];
-  const navigate = useNavigate();
-  const authContext = useContext(AuthContext);
   if (authContext.isLoggedIn) {
     listData.push({ icon: <PersonIcon />, label: "Profile" });
     listData.push({ icon: <LogoutIcon />, label: "Logout" });
   }
-  const listItems = listData.map((item) => {
+  const listItems = listData.map((item, index) => {
     return (
-      <ListItem disablePadding selected={selectedLabel === item.label}>
+      <ListItem
+        disablePadding
+        selected={selectedLabel === item.label}
+        key={index * 100}
+      >
         <ListItemButton
+          key={index * 10}
           onClick={
             item.label === "Logout"
               ? () => {
@@ -53,16 +57,11 @@ const HiddenSidebarMenu = ({ selectedLabel }) => {
       </ListItem>
     );
   });
-
   const handleLogoutClick = () => {
     authContext.logout();
     navigate("/signInPage");
   };
-  return (
-    <Box padding={"20px"}>
-      <List>{listItems}</List>
-    </Box>
-  );
+  return <List>{listItems}</List>;
 };
 
-export default HiddenSidebarMenu;
+export default LeftSidebarMenu;

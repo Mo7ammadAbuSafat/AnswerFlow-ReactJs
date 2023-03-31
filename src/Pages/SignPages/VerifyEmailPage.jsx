@@ -62,7 +62,7 @@ const VerifyEmailPage = () => {
           }
         )
         .then((response) => {
-          authContext.login(response.data.id);
+          authContext.login(response.data);
           alertStates.handleOpenSuccessAlert();
           navigate("/feedPage");
         })

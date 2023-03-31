@@ -4,12 +4,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import FormStepper from "./FormStepper";
 
-export const Custom = ({ onClose }) => {
+const Custom = ({ name, onClose }) => {
   return (
     <DialogTitle>
-      Post a question
+      {name}
       <IconButton
         aria-label="close"
         onClick={onClose}
@@ -26,7 +25,7 @@ export const Custom = ({ onClose }) => {
   );
 };
 
-const PopUpModal = ({ handleClose, open }) => {
+const PopUpModal = ({ name, handleClose, open, children }) => {
   return (
     <React.Fragment>
       <Dialog
@@ -35,10 +34,8 @@ const PopUpModal = ({ handleClose, open }) => {
         open={open}
         onClose={handleClose}
       >
-        <Custom onClose={handleClose} />
-        <DialogContent>
-          <FormStepper onClose={handleClose} />
-        </DialogContent>
+        <Custom name={name} onClose={handleClose} />
+        <DialogContent>{children}</DialogContent>
       </Dialog>
     </React.Fragment>
   );
