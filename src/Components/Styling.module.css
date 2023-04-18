@@ -31,3 +31,7 @@
 .answer{
     color: #757575;
 }
+
+.votes:hover{
+    cursor: pointer;
+}

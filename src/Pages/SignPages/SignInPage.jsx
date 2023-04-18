@@ -89,6 +89,7 @@ const SignInPage = () => {
         .then((response) => {
           authContext.login(response.data);
           alertStates.handleOpenSuccessAlert();
+          console.log(response.data);
           navigate("/feedPage");
         })
         .catch((error) => {
@@ -110,8 +111,9 @@ const SignInPage = () => {
                 .then((response) => {
                   navigate(`/verifyEmailPage/${response.data.id}`);
                 });
-            }
+            } else console.log(error);
           } else {
+            console.log(error);
             alert("Error: ", error.message);
           }
         });
@@ -122,7 +124,7 @@ const SignInPage = () => {
   return (
     <SignContainer>
       <TextField
-        sx={{ width: "100%", margin: "15px 0 0 0" }}
+        sx={{ width: "100%", margin: "15px 0 5px 0" }}
         label="Email"
         type="email"
         name="email"

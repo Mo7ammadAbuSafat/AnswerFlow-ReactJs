@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Grid } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Question from "./Question";
 import Answer from "./Answer";
 import Styles from "../Styling.module.css";
-import { Stack } from "@mui/system";
 import PopUpWithButton from "../Popup/PopUpWithButton";
 import FormAnswer from "./FormAnswer";
 
@@ -42,27 +41,31 @@ const FullQuestion = ({ questionId }) => {
   return (
     <Box flex={4} p={2} sx={{ paddingTop: 5 }}>
       <Question questionData={questionData} />
-      <Stack
+      <Grid
+        container
         justifyContent={"space-between"}
         alignItems={"center"}
-        direction={"row"}
         p={1}
       >
-        <h2 className={Styles.answer}>
-          {questionData.answers.length === 0 ? "No Answers Yet" : "Answers: "}
-        </h2>
-        <PopUpWithButton
-          name={"Add Answer"}
-          open={openPopup}
-          handleOpen={handleOpenPopup}
-          handleClose={handleClosePopup}
-        >
-          <FormAnswer
-            questionId={questionData.id}
+        <Grid item xs={4}>
+          <h2 className={Styles.answer}>
+            {questionData.answers.length === 0 ? "No Answers Yet" : "Answers: "}
+          </h2>
+        </Grid>
+        <Grid item xs={2}>
+          <PopUpWithButton
+            name={"Add Answer"}
+            open={openPopup}
+            handleOpen={handleOpenPopup}
             handleClose={handleClosePopup}
-          />
-        </PopUpWithButton>
-      </Stack>
+          >
+            <FormAnswer
+              questionId={questionData.id}
+              handleClose={handleClosePopup}
+            />
+          </PopUpWithButton>
+        </Grid>
+      </Grid>
 
       {questionData.answers.map((answer) => {
         return (

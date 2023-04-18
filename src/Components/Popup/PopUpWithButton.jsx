@@ -9,7 +9,7 @@ const PopUpWithButton = ({ name, open, handleOpen, handleClose, children }) => {
     <>
       <Button
         sx={{
-          margin: "20px 0 30px 0",
+          width: "100%",
           height: "45px",
           background: "#4489f8",
           textTransform: "none",
@@ -21,7 +21,12 @@ const PopUpWithButton = ({ name, open, handleOpen, handleClose, children }) => {
       >
         {name}
       </Button>
-      <PopUpModal name={name} open={open} handleClose={handleClose}>
+      <PopUpModal
+        name={name}
+        open={open}
+        fullWidth={true}
+        handleClose={handleClose}
+      >
         {children}
       </PopUpModal>
     </>

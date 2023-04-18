@@ -14,22 +14,22 @@ import {
 import { Stack } from "@mui/system";
 import axios from "axios";
 import AlertContext from "../Store/AlertProvider";
-import AuthContext from "../Store/AuthProvider";
 
-const steps = ["Write title and body", "Add tags", "Similar questions"];
+const steps = ["title and body", "tags"];
 
-const FormStepperToPostQuestion = ({ onClose }) => {
+const FormStepperToEditQuestion = ({ questionData, onClose }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
 
   const [inputs, setInputs] = useState({
-    title: "",
-    body: "",
+    title: questionData.title,
+    body: questionData.body,
   });
 
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState(
+    questionData.tags.map((tag) => tag.name)
+  );
 
   const [validation, setValidation] = useState({
     title: true,
@@ -103,20 +103,23 @@ const FormStepperToPostQuestion = ({ onClose }) => {
     setSelectedTags(tags);
   };
 
-  const handlePostClick = async () => {
+  const handleEditClick = async () => {
     setIsLoading(true);
     const data = {
-      userId: authContext.user.id,
       ...inputs,
       tagsNames: selectedTags,
     };
     await axios
-      .post("https://localhost:7127/api/questions", JSON.stringify(data), {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
+      .put(
+        `https://localhost:7127/api/questions/${questionData.id}`,
+        JSON.stringify(data),
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((response) => {
         alertStates.handleOpenSuccessAlert();
       })
@@ -238,11 +241,6 @@ const FormStepperToPostQuestion = ({ onClose }) => {
             ))}
           </Stack>
         </Stack>
-        <Stack display={activeStep !== 2 ? "none" : "flex"} height={"280px"}>
-          <h1 style={{ margin: "35px 20px", color: "silver" }}>
-            there is no questions similar
-          </h1>
-        </Stack>
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
           <Button
             color="inherit"
@@ -259,7 +257,7 @@ const FormStepperToPostQuestion = ({ onClose }) => {
             <Button
               disabled={isLoading}
               onClick={() => {
-                handlePostClick();
+                handleEditClick();
                 onClose();
               }}
             >
@@ -270,7 +268,7 @@ const FormStepperToPostQuestion = ({ onClose }) => {
                   sx={{ marginRight: "5px" }}
                 />
               ) : (
-                "Post"
+                "Edit"
               )}
             </Button>
           )}
@@ -280,4 +278,4 @@ const FormStepperToPostQuestion = ({ onClose }) => {
   );
 };
 
-export default FormStepperToPostQuestion;
+export default FormStepperToEditQuestion;

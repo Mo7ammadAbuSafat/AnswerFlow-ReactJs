@@ -14,12 +14,17 @@ const Navbar = ({ children, displayMenu = false, toggleDrawer = () => {} }) => {
             <MenuIcon sx={{ color: "white", fontSize: "30px" }} />
           </IconButton>
         )}
-        <img onClick={() => navigate("/")} src="/Assets/AnswerFlowJust.png" />
+        <img
+          onClick={() => navigate("/")}
+          src="/Assets/AnswerFlowJust.png"
+          alt=""
+        />
       </div>
       <img
         className={styles.navImg}
         onClick={() => navigate("/")}
         src="/Assets/AnswerFlow-Logo.png"
+        alt=""
       />
       {children}
     </div>

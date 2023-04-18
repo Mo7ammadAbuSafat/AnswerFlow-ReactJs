@@ -10,7 +10,7 @@ const LeftSidebar = ({ selectedLabel }) => {
       position={"sticky"}
       top={80}
       sx={{
-        marginTop: "16px",
+        marginTop: "12px",
         height: "calc(100vh - 80px)",
         display: { xs: "none", sm: "none", md: "block" },
       }}

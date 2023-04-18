@@ -25,17 +25,17 @@ const Custom = ({ name, onClose }) => {
   );
 };
 
-const PopUpModal = ({ name, handleClose, open, children }) => {
+const PopUpModal = ({ name, handleClose, open, fullWidth, children }) => {
   return (
     <React.Fragment>
       <Dialog
-        fullWidth={true}
+        fullWidth={fullWidth}
         maxWidth={"md"}
         open={open}
         onClose={handleClose}
       >
         <Custom name={name} onClose={handleClose} />
-        <DialogContent>{children}</DialogContent>
+        <DialogContent sx={{ minWidth: "200px" }}>{children}</DialogContent>
       </Dialog>
     </React.Fragment>
   );

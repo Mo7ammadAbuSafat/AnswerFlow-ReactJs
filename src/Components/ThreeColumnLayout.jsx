@@ -6,9 +6,9 @@ function ThreeColumnLayout({ children }) {
     <Stack
       direction={"row"}
       justifyContent={"space-between"}
-      spacing={0.4}
+      spacing={1}
       sx={{
-        margin: 0,
+        margin: "0 0 30px 0",
         padding: {
           xs: "0 5px 0 5px",
           sm: "0 30px 0 20px",

@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
@@ -22,7 +22,7 @@ const AboutUsPage = () => {
           size="medium"
           onClick={() => navigate("/")}
         >
-          Back
+          Home
         </Button>
       </Navbar>
       <div
