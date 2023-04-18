@@ -56,13 +56,9 @@ const SignInPage = () => {
     password: Joi.string().required(),
   });
 
-  const validateInput = (input, inputSchema) => {
-    return inputSchema.validate(input);
-  };
-
   const onChange = (e) => {
     const { name, value } = e.target;
-    const validation = validateInput(value, signInSchema.extract(name));
+    const validation = signInSchema.extract(name).validate(value);
     if (validation.error) {
       setValidationErrors({
         ...validationErrors,
@@ -91,8 +87,9 @@ const SignInPage = () => {
           }
         )
         .then((response) => {
-          authContext.login(response.data.id);
+          authContext.login(response.data);
           alertStates.handleOpenSuccessAlert();
+          console.log(response.data);
           navigate("/feedPage");
         })
         .catch((error) => {
@@ -109,9 +106,14 @@ const SignInPage = () => {
                 email: "this email is not exist",
               });
             } else if (errorMessage === "You must Verify your email") {
-              navigate("/verifyEmailPage");
-            }
+              axios
+                .get(`https://localhost:7127/api/users?email=${inputs.email}`)
+                .then((response) => {
+                  navigate(`/verifyEmailPage/${response.data.id}`);
+                });
+            } else console.log(error);
           } else {
+            console.log(error);
             alert("Error: ", error.message);
           }
         });
@@ -122,7 +124,7 @@ const SignInPage = () => {
   return (
     <SignContainer>
       <TextField
-        sx={{ width: "100%", margin: "15px 0 0 0" }}
+        sx={{ width: "100%", margin: "15px 0 5px 0" }}
         label="Email"
         type="email"
         name="email"

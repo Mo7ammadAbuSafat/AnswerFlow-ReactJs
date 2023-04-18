@@ -25,20 +25,8 @@
     cursor: pointer;
 }
 
-.sign .container h1{
-    font-size: 30px;
-    font-weight: 500;
-    color: #0A093D;
-}
-
-.sign p{
-    font-size: 15px;
-    color: #0a093db2;
-}
-
 .sign p span{
     color: #4489f8;
-
 }
 
 .sign p span:hover{

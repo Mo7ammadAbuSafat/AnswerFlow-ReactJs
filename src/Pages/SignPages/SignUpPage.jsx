@@ -120,6 +120,7 @@ const SignUpPage = () => {
               console.log(errorMessage);
             }
           } else {
+            console.log(error);
             alert("Error: ", error.message);
           }
         });
@@ -130,7 +131,7 @@ const SignUpPage = () => {
   return (
     <SignContainer>
       <TextField
-        sx={{ width: "100%", margin: "10px 0 0 0" }}
+        sx={{ width: "100%", margin: "10px 0 5px 0" }}
         label="Email"
         type="email"
         name="email"
@@ -141,7 +142,7 @@ const SignUpPage = () => {
         error={validationErrors.email !== " "}
       />
       <TextField
-        sx={{ width: "100%", margin: "3px 0" }}
+        sx={{ width: "100%", margin: "5px 0" }}
         label="Username"
         name="username"
         id="outlined"
@@ -151,7 +152,7 @@ const SignUpPage = () => {
         error={validationErrors.username !== " "}
       />
 
-      <FormControl sx={{ width: "100%", margin: "3px 0" }} variant="outlined">
+      <FormControl sx={{ width: "100%", margin: "5px 0" }} variant="outlined">
         <InputLabel
           htmlFor="outlined-adornment-password"
           error={validationErrors.password !== " "}
@@ -184,7 +185,7 @@ const SignUpPage = () => {
           {validationErrors.password}
         </FormHelperText>
       </FormControl>
-      <FormControl sx={{ width: "100%", margin: "3px 0" }} variant="outlined">
+      <FormControl sx={{ width: "100%", margin: "5px 0" }} variant="outlined">
         <InputLabel
           htmlFor="outlined-adornment-password1"
           error={validationErrors.confirmPassword !== " "}

@@ -1,3 +1,4 @@
+import { Stack } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Button,
@@ -8,54 +9,59 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  TextField,
 } from "@mui/material";
-import axios from "axios";
-import Joi from "joi";
 import React, { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import AlertContext from "../../Components/Store/AlertProvider";
-import SignContainer from "./SignContainer";
+import Joi from "joi";
+import axios from "axios";
+import AuthContext from "../../Components/Store/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
-const ResetPasswordPage2 = () => {
+const SecuritySection = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => event.preventDefault();
+  const [showPassword1, setShowPassword1] = useState(false);
+  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
+  const handleMouseDownPassword1 = (event) => event.preventDefault();
   const [showPassword2, setShowPassword2] = useState(false);
   const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
   const handleMouseDownPassword2 = (event) => event.preventDefault();
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const { userId } = useParams();
-  const alertStates = useContext(AlertContext);
 
-  const [isLoading2, setIsLoading2] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const alertStates = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  if (!authContext.isLoggedIn) {
+    navigate("/signInPage");
+  }
 
   const [inputs, setInputs] = useState({
-    code: "",
+    oldPassword: "",
     newPassword: "",
     confirmNewPassword: "",
   });
 
   const [validationErrors, setValidationErrors] = useState({
-    code: " ",
+    oldPassword: " ",
     newPassword: " ",
     confirmNewPassword: " ",
   });
 
   const CheckValidation = () => {
     return (
-      validationErrors.code === " " &&
+      validationErrors.oldPassword === " " &&
       validationErrors.newPassword === " " &&
       validationErrors.confirmNewPassword === " " &&
-      inputs.code !== "" &&
+      inputs.oldPassword !== "" &&
       inputs.newPassword !== "" &&
       inputs.confirmNewPassword !== ""
     );
   };
 
   const ResetPasswordSchema = Joi.object({
-    code: Joi.string().required(),
+    oldPassword: Joi.string().required(),
     newPassword: Joi.string().min(8).max(20).required(),
     confirmNewPassword: Joi.string().equal(inputs.newPassword).required(),
   });
@@ -86,33 +92,12 @@ const ResetPasswordPage2 = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
-  const resendCode = async () => {
-    setIsLoading2(true);
-    await axios
-      .post(
-        `https://localhost:7127/api/users/${userId}/resend-reset-password-code`,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        alertStates.handleOpenSuccessAlert();
-      })
-      .catch((error) => {
-        alert("Error: ", error.message);
-      });
-    setIsLoading2(false);
-  };
-
   const onSubmit = async (e) => {
-    if (CheckValidation) {
+    if (CheckValidation()) {
       setIsLoading(true);
       await axios
         .put(
-          `https://localhost:7127/api/users/${userId}/reset-password`,
+          `https://localhost:7127/api/users/${authContext.user.id}/reset-password-by-old-password`,
           JSON.stringify(inputs),
           {
             headers: {
@@ -122,48 +107,83 @@ const ResetPasswordPage2 = () => {
           }
         )
         .then((response) => {
+          setInputs({
+            oldPassword: "",
+            newPassword: "",
+            confirmNewPassword: "",
+          });
           alertStates.handleOpenSuccessAlert();
-          navigate("/signInPage");
         })
         .catch((error) => {
           if (error.response) {
             var errorMessage = error.response.data.error;
-            if (errorMessage === "Invalid Code") {
+            if (errorMessage === "Password is not correct") {
               setValidationErrors({
                 ...validationErrors,
-                code: "invalid code",
-              });
-            } else if (errorMessage === "Expired Code, we sent another one") {
-              setValidationErrors({
-                ...validationErrors,
-                code: "expired code, we sent another one",
+                oldPassword: "incorrect password",
               });
             } else {
               alert("Error: ", errorMessage);
             }
-            setInputs();
           } else {
             alert("Error: ", error.message);
           }
         });
-      setInputs({ ...inputs, newPassword: "", confirmNewPassword: "" });
     }
     setIsLoading(false);
   };
 
   return (
-    <SignContainer>
-      <TextField
-        sx={{ width: "100%", margin: "15px 0 5px 0" }}
-        label="The Code"
-        name="code"
-        id="outlined"
-        onChange={onChange}
-        value={inputs.code}
-        helperText={validationErrors.code}
-        error={validationErrors.code !== " "}
-      />
-      <FormControl sx={{ width: "100%", margin: "5px 0" }} variant="outlined">
+    <Stack alignItems={"center"} spacing={2}>
+      <FormControl
+        sx={{
+          maxWidth: "450px",
+          minWidth: "300px",
+          width: "100%",
+          marginTop: "40px",
+        }}
+        variant="outlined"
+      >
+        <InputLabel
+          htmlFor="outlined-adornment-password"
+          error={validationErrors.oldPassword !== " "}
+        >
+          Old Password
+        </InputLabel>
+        <OutlinedInput
+          autoComplete="off"
+          error={validationErrors.oldPassword !== " "}
+          id="outlined-adornment-password"
+          name="oldPassword"
+          label="oldPassword"
+          type={showPassword1 ? "text" : "password"}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword1}
+                onMouseDown={handleMouseDownPassword1}
+                edge="end"
+              >
+                {showPassword1 ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }
+          value={inputs.oldPassword}
+          onChange={onChange}
+        />
+        <FormHelperText error={validationErrors.oldPassword !== " "}>
+          {validationErrors.oldPassword}
+        </FormHelperText>
+      </FormControl>
+      <FormControl
+        sx={{
+          maxWidth: "450px",
+          minWidth: "300px",
+          width: "100%",
+        }}
+        variant="outlined"
+      >
         <InputLabel
           htmlFor="outlined-adornment-password"
           error={validationErrors.newPassword !== " "}
@@ -196,7 +216,14 @@ const ResetPasswordPage2 = () => {
           {validationErrors.newPassword}
         </FormHelperText>
       </FormControl>
-      <FormControl sx={{ width: "100%", margin: "5px 0" }} variant="outlined">
+      <FormControl
+        sx={{
+          maxWidth: "450px",
+          minWidth: "300px",
+          width: "100%",
+        }}
+        variant="outlined"
+      >
         <InputLabel
           htmlFor="outlined-adornment-password1"
           error={validationErrors.confirmNewPassword !== " "}
@@ -231,11 +258,9 @@ const ResetPasswordPage2 = () => {
       </FormControl>
       <Button
         sx={{
-          width: "160px",
-          height: "42px",
-          textTransform: "none",
+          height: "40px",
           background: "#4489f8",
-          margin: "10px 0",
+          textTransform: "none",
         }}
         variant="contained"
         size="large"
@@ -252,20 +277,8 @@ const ResetPasswordPage2 = () => {
           "Reset Password"
         )}
       </Button>
-      <p>
-        You did't receive the code?{" "}
-        <span
-          style={{
-            pointerEvents: isLoading2 ? "none" : "initial",
-            color: isLoading2 ? "#757575" : "",
-          }}
-          onClick={() => resendCode()}
-        >
-          Resend
-        </span>
-      </p>
-    </SignContainer>
+    </Stack>
   );
 };
 
-export default ResetPasswordPage2;
+export default SecuritySection;
