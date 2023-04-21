@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import AuthContext from "./Components/Store/AuthProvider";
-import SignInPage from "./Pages/SignPages/SignInPage";
+import AuthContext from "../../Components/Store/AuthProvider";
+import SignInPage from "../SignPages/SignInPage";
 
 const ProtectedPage = ({ children }) => {
   const authContext = useContext(AuthContext);

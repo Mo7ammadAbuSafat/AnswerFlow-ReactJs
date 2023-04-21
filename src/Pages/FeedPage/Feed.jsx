@@ -1,36 +1,36 @@
-import { Box, Card, Grid, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Card, Pagination, Stack, Tab } from "@mui/material";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import PopUpWithButton from "../../Components/Popup/PopUpWithButton";
-import FormStepperToPostQuestion from "../../Components/Question/FormStepperToPostQuestion";
+import React, { useContext, useEffect, useState } from "react";
 import Question from "../../Components/Question/Question";
+import { TabContext, TabList } from "@mui/lab";
+import AuthContext from "../../Components/Store/AuthProvider";
 
 const Feed = () => {
+  const authContext = useContext(AuthContext);
+
+  const [tabValue, setTabValue] = useState("recently");
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
   // for pagination
-  const [paginationValues, setPaginationValues] = useState({
-    currentPage: 1,
-    pageSize: 10,
-  });
+  const [pageNumber, setPageNumber] = useState(1);
   const [numOfPages, setNumOfPages] = useState(1);
   // end
-
-  const [openPopup, setOpenPopup] = useState(false);
-  const handleOpenPopup = () => {
-    setOpenPopup(true);
-  };
-  const handleClosePopup = () => {
-    setOpenPopup(false);
-  };
 
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      const apiUrl =
+        tabValue === "following"
+          ? `https://localhost:7127/api/questions/users/${authContext.user.id}/following`
+          : "https://localhost:7127/api/questions";
       await axios
-        .get("https://localhost:7127/api/questions", {
+        .get(apiUrl, {
           params: {
-            pageNumber: paginationValues.currentPage,
-            pageSize: paginationValues.pageSize,
+            pageNumber: pageNumber,
+            pageSize: 10,
           },
           headers: {
             Accept: "application/json",
@@ -43,7 +43,7 @@ const Feed = () => {
         });
     };
     fetchData();
-  }, [paginationValues]);
+  }, [pageNumber, tabValue, authContext]);
 
   if (data === null) {
     return <Box flex={4}>Loading...</Box>;
@@ -51,28 +51,25 @@ const Feed = () => {
 
   return (
     <Box flex={4} p={2}>
-      <Grid
-        container
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        height={100}
-      >
-        <Grid item xs={2.5}>
-          <Typography variant="h3" color="text.secondary" sx={{ margin: 0 }}>
-            Feed
-          </Typography>
-        </Grid>
-        <Grid item xs={2.5}>
-          <PopUpWithButton
-            name={"Post Question"}
-            open={openPopup}
-            handleOpen={handleOpenPopup}
-            handleClose={handleClosePopup}
-          >
-            <FormStepperToPostQuestion onClose={handleClosePopup} />
-          </PopUpWithButton>
-        </Grid>
-      </Grid>
+      <TabContext value={tabValue}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+            width: "228.45px",
+            margin: "10px auto 30px auto",
+          }}
+        >
+          <TabList onChange={handleTabChange} aria-label="lab API tabs example">
+            <Tab label="Recently" value="recently" />
+            <Tab
+              label="Following"
+              value="following"
+              disabled={!authContext.isLoggedIn}
+            />
+          </TabList>
+        </Box>
+      </TabContext>
 
       <Stack spacing={3}>
         {data.map((question) => {
@@ -92,13 +89,10 @@ const Feed = () => {
           count={numOfPages}
           color="primary"
           onChange={(e, page) => {
-            setPaginationValues({
-              ...paginationValues,
-              currentPage: page,
-            });
+            setPageNumber(page);
             window.scroll(0, 0);
           }}
-          value={paginationValues.currentPage}
+          value={pageNumber}
         />
       </Stack>
     </Box>

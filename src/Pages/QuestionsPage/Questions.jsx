@@ -4,7 +4,7 @@ import PopUpWithButton from "../../Components/Popup/PopUpWithButton";
 import FormStepperToPostQuestion from "../../Components/Question/FormStepperToPostQuestion";
 import Question from "../../Components/Question/Question";
 import axios from "axios";
-import Filter from "../../Components/Filter/Filter";
+import Filter from "./Filter";
 
 const Questions = () => {
   const [apiParams, setApiParams] = useState({

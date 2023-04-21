@@ -31,6 +31,7 @@ import AlertContext from "../Store/AlertProvider";
 import FormReport from "./FormReport";
 import FormStepperToEditQuestion from "./FormStepperToEditQuestion";
 import QuestionHistory from "./QuestionHistory";
+import FormToEditQuestionTags from "./FormToEditQuestionTags";
 
 const Question = ({ questionData, showFullBody = true }) => {
   const authContext = useContext(AuthContext);
@@ -72,6 +73,10 @@ const Question = ({ questionData, showFullBody = true }) => {
       const years = Math.floor(diff / 31536000);
       return `${years} ${years > 1 ? "years" : "year"} ago`;
     }
+  };
+
+  const openLinkInNewTab = (url) => {
+    window.open(url, "_blank");
   };
 
   //#region initVoteValue
@@ -178,7 +183,7 @@ const Question = ({ questionData, showFullBody = true }) => {
 
   //end
 
-  //this for Edit History
+  //this for Edit Question
 
   const [openEditQuestionPopup, setOpenEditQuestionPopup] = useState(false);
   const handleEditQuestionClick = () => {
@@ -187,6 +192,20 @@ const Question = ({ questionData, showFullBody = true }) => {
   };
   const handleCloseEditQuestionPopup = () => {
     setOpenEditQuestionPopup(false);
+  };
+
+  //end
+
+  //this for Edit Question Tags
+
+  const [openEditQuestionTagsPopup, setOpenEditQuestionTagsPopup] =
+    useState(false);
+  const handleEditQuestionTagsClick = () => {
+    setOpenEditQuestionTagsPopup(true);
+    handleClose();
+  };
+  const handleCloseEditQuestionTagsPopup = () => {
+    setOpenEditQuestionTagsPopup(false);
   };
 
   //end
@@ -307,6 +326,11 @@ const Question = ({ questionData, showFullBody = true }) => {
               {questionData.editHistory.length !== 0 && (
                 <MenuItem onClick={handleHistoryClick}>Edit History</MenuItem>
               )}
+              {authContext.isLoggedIn && authContext.user.type === 2 && (
+                <MenuItem onClick={handleEditQuestionTagsClick}>
+                  Edit Tags
+                </MenuItem>
+              )}
             </Menu>
             <PopUpModal
               name={"Report Question"}
@@ -315,7 +339,7 @@ const Question = ({ questionData, showFullBody = true }) => {
               handleClose={handleCloseReportPopup}
             >
               <FormReport
-                questionId={questionData.id}
+                apiUrl={`https://localhost:7127/api/questions/${questionData.id}/reports`}
                 handleClose={handleCloseReportPopup}
               />
             </PopUpModal>
@@ -336,6 +360,17 @@ const Question = ({ questionData, showFullBody = true }) => {
               <FormStepperToEditQuestion
                 questionData={questionData}
                 onClose={handleCloseEditQuestionPopup}
+              />
+            </PopUpModal>
+            <PopUpModal
+              name={"Edit Question Tags"}
+              open={openEditQuestionTagsPopup}
+              fullWidth={true}
+              handleClose={handleCloseEditQuestionTagsPopup}
+            >
+              <FormToEditQuestionTags
+                questionData={questionData}
+                onClose={handleCloseEditQuestionTagsPopup}
               />
             </PopUpModal>
           </>
@@ -418,6 +453,11 @@ const Question = ({ questionData, showFullBody = true }) => {
                     sx={{ fontSize: "10px" }}
                     size={"small"}
                     color={"default"}
+                    onClick={
+                      tag.sourceLink !== null
+                        ? () => openLinkInNewTab(tag.sourceLink)
+                        : false
+                    }
                   />
                 );
               })}

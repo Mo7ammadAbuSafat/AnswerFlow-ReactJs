@@ -2,7 +2,7 @@ import { Avatar, Button, Fade, Menu, MenuItem } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchAppBar from "../SearchAppBar";
+import SearchAppBar from "./SearchAppBar";
 import AuthContext from "../Store/AuthProvider";
 import Navbar from "./Navbar";
 import HiddenLeftSide from "../LeftSidebar/HiddenLeftSide";
@@ -60,9 +60,30 @@ function Navbar2({ selectedLabel }) {
                 onClose={handleClose}
                 TransitionComponent={Fade}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/ProfilePage");
+                    handleClose();
+                  }}
+                >
+                  Profile
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/users/account");
+                    handleClose();
+                  }}
+                >
+                  My account
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/signInPage");
+                    authContext.logout();
+                  }}
+                >
+                  Logout
+                </MenuItem>
               </Menu>
             </Stack>
           ) : (

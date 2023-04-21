@@ -1,6 +1,6 @@
 import { Snackbar } from "@mui/material";
 import React, { forwardRef, useContext } from "react";
-import AlertContext from "./Store/AlertProvider";
+import AlertContext from "../Store/AlertProvider";
 import MuiAlert from "@mui/material/Alert";
 
 const SuccessAlert = () => {

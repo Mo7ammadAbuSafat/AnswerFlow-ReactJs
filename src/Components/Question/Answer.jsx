@@ -13,12 +13,18 @@ import AuthContext from "../Store/AuthProvider";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DoneTwoToneIcon from "@mui/icons-material/DoneTwoTone";
 import { Stack } from "@mui/material";
 import { BsFillCaretUpFill, BsFillCaretDownFill } from "react-icons/bs";
 import Styles from "../Styling.module.css";
+import PopUpModal from "../Popup/PopUpModal";
+import FormReport from "./FormReport";
+import AlertContext from "../Store/AlertProvider";
+import FormToEditAnswer from "./FormToEditAnswer";
 
 const Answer = ({ answerData, showFullBody = true }) => {
   const authContext = useContext(AuthContext);
+  const alertStates = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(false);
 
   // this for menu:
@@ -107,6 +113,72 @@ const Answer = ({ answerData, showFullBody = true }) => {
     setIsLoading(false);
   };
 
+  // this for report
+  const [openReportPopup, setOpenReportPopup] = useState(false);
+  const handleReportClick = () => {
+    setOpenReportPopup(true);
+    handleClose();
+  };
+  const handleCloseReportPopup = () => {
+    setOpenReportPopup(false);
+  };
+  //end
+
+  // this for delete
+  const handleDeleteClick = () => {
+    setIsLoading(true);
+    if (answerData.user.id === authContext.user.id) {
+      axios
+        .delete(
+          `https://localhost:7127/api/questions/${answerData.questionId}/answers/${answerData.id}`
+        )
+        .then((response) => {
+          alertStates.handleOpenSuccessAlert();
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(error.response.data.error);
+          } else {
+            alert("Error: ", error.message);
+          }
+        });
+    }
+    setIsLoading(false);
+    handleClose();
+  };
+  //end
+
+  //this for Edit Answer
+
+  const [openEditAnswerPopup, setOpenEditAnswerPopup] = useState(false);
+  const handleEditAnswerClick = () => {
+    setOpenEditAnswerPopup(true);
+    handleClose();
+  };
+  const handleCloseEditAnswerPopup = () => {
+    setOpenEditAnswerPopup(false);
+  };
+
+  //end
+
+  const handleApproveAnswerClick = () => {
+    setIsLoading(true);
+    axios
+      .put(
+        `https://localhost:7127/api/questions/${answerData.questionId}/answers/${answerData.id}/approve`
+      )
+      .then((response) => alertStates.handleOpenSuccessAlert())
+      .catch((error) => {
+        if (error.response) {
+          alert(error.response.data.error);
+        } else {
+          alert("Error: ", error.message);
+        }
+      });
+    setIsLoading(false);
+    handleClose();
+  };
+
   return (
     <Card sx={{ margin: "25px 0" }}>
       <CardHeader
@@ -133,15 +205,55 @@ const Answer = ({ answerData, showFullBody = true }) => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <MenuItem onClick={handleClose}>Report</MenuItem>
-              <MenuItem onClick={handleClose}>Save</MenuItem>
-              <MenuItem onClick={handleClose}>Delete</MenuItem>
+              <MenuItem
+                sx={{ width: 120 }}
+                onClick={handleReportClick}
+                disabled={!authContext.isLoggedIn}
+              >
+                Report
+              </MenuItem>
+              {authContext.isLoggedIn &&
+                answerData.user.id === authContext.user.id && [
+                  <MenuItem onClick={handleEditAnswerClick}>Edit</MenuItem>,
+                  <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>,
+                ]}
+              {authContext.isLoggedIn && authContext.user.type === 2 && (
+                <MenuItem
+                  disabled={isLoading || answerData.answerStatus === 1}
+                  onClick={handleApproveAnswerClick}
+                >
+                  Approve
+                </MenuItem>
+              )}
             </Menu>
+            <PopUpModal
+              name={"Report Answer"}
+              open={openReportPopup}
+              fullWidth={true}
+              handleClose={handleCloseReportPopup}
+            >
+              <FormReport
+                apiUrl={`https://localhost:7127/api/questions/${answerData.questionId}/answers/${answerData.id}/reports`}
+                handleClose={handleCloseReportPopup}
+              />
+            </PopUpModal>
+            <PopUpModal
+              name={"Edit Answer"}
+              open={openEditAnswerPopup}
+              fullWidth={true}
+              handleClose={handleCloseEditAnswerPopup}
+            >
+              <FormToEditAnswer
+                answerData={answerData}
+                handleClose={handleCloseEditAnswerPopup}
+              />
+            </PopUpModal>
           </>
         }
         title={answerData.user.username}
         subheader={getTimeSince(answerData.creationDate)}
       />
+
       <CardContent sx={{ padding: 0, marginTop: 1 }}>
         <Stack direction={"row"} justifyContent={"left"}>
           <Stack
@@ -171,6 +283,15 @@ const Answer = ({ answerData, showFullBody = true }) => {
                 color={userVote === -1 ? "#4489f8" : "#757575"}
               />
             </IconButton>
+            {answerData.answerStatus === 1 && (
+              <DoneTwoToneIcon
+                sx={{
+                  fontSize: "35px",
+                  color: "green",
+                  marginTop: "5px",
+                }}
+              />
+            )}
           </Stack>
           <Stack
             spacing={1.5}

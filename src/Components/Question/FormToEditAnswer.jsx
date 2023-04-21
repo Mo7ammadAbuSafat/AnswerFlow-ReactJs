@@ -4,35 +4,38 @@ import AuthContext from "../Store/AuthProvider";
 import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import axios from "axios";
 
-const FormReport = ({ apiUrl, handleClose }) => {
+const FormToEditAnswer = ({ answerData, handleClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
-  const [body, setBody] = useState("");
+  const [body, setBody] = useState(answerData.body);
   const [bodyValidation, setBodyValidation] = useState(true);
 
   const onChange = (value) => {
     setBody(value);
     setBodyValidation(true);
   };
-  const handlePostClick = async () => {
+  const handleEditClick = async () => {
     if (body !== "") {
       setIsLoading(true);
       const data = {
         userId: authContext.user.id,
-        description: body,
+        body: body,
       };
       await axios
-        .post(apiUrl, JSON.stringify(data), {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        })
+        .put(
+          `https://localhost:7127/api/questions/${answerData.questionId}/answers/${answerData.id}`,
+          JSON.stringify(data),
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((response) => {
           alertStates.handleOpenSuccessAlert();
-          handleClose();
         })
         .catch((error) => {
           if (error.response) {
@@ -56,7 +59,7 @@ const FormReport = ({ apiUrl, handleClose }) => {
       <TextField
         sx={{ width: "100%" }}
         id="outlined-multiline-static"
-        label="Description"
+        label="Body"
         name="body"
         onChange={(e) => onChange(e.target.value)}
         value={body}
@@ -64,7 +67,7 @@ const FormReport = ({ apiUrl, handleClose }) => {
         multiline
         rows={4}
       />
-      <Button width={"100px"} disabled={isLoading} onClick={handlePostClick}>
+      <Button width={"100px"} disabled={isLoading} onClick={handleEditClick}>
         {isLoading ? (
           <CircularProgress
             color="inherit"
@@ -72,11 +75,11 @@ const FormReport = ({ apiUrl, handleClose }) => {
             sx={{ marginRight: "5px" }}
           />
         ) : (
-          "Report"
+          "Edit"
         )}
       </Button>
     </Stack>
   );
 };
 
-export default FormReport;
+export default FormToEditAnswer;

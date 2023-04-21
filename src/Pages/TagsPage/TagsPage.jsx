@@ -3,20 +3,18 @@ import Navbar2 from "../../Components/Navbar/Navbar2";
 import ThreeColumnLayout from "../../Components/Layout/ThreeColumnLayout";
 import LeftSidebar from "../../Components/LeftSidebar/LeftSidebar";
 import RightSidebar from "../../Components/RightSidebar/RightSidebar";
-import PopularTags from "../../Components/RightSidebar/PopularTags";
 import SuggestUsers from "../../Components/RightSidebar/SuggestUsers";
 import Footer from "../../Components/Footer/Footer";
-import Questions from "./Questions";
+import Tags from "./Tags";
 
-const QuestionsPage = () => {
+const TagsPage = () => {
   return (
     <>
-      <Navbar2 selectedLabel={"Questions"} />
+      <Navbar2 selectedLabel={"Tags"} />
       <ThreeColumnLayout>
-        <LeftSidebar selectedLabel={"Questions"} />
-        <Questions />
+        <LeftSidebar selectedLabel={"Tags"} />
+        <Tags />
         <RightSidebar>
-          <PopularTags />
           <SuggestUsers />
         </RightSidebar>
       </ThreeColumnLayout>
@@ -25,4 +23,4 @@ const QuestionsPage = () => {
   );
 };
 
-export default QuestionsPage;
+export default TagsPage;

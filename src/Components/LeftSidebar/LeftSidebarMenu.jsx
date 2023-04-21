@@ -8,8 +8,8 @@ import {
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
+import StyleIcon from "@mui/icons-material/Style";
 import SettingsIcon from "@mui/icons-material/Settings";
-import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DynamicFeedTwoToneIcon from "@mui/icons-material/DynamicFeedTwoTone";
 import React, { useContext } from "react";
@@ -31,6 +31,11 @@ const LeftSidebarMenu = ({ selectedLabel }) => {
       icon: <QuestionMarkIcon />,
       label: "Questions",
       routPath: "/QuestionsPage",
+    },
+    {
+      icon: <StyleIcon />,
+      label: "Tags",
+      routPath: "/TagsPage",
     },
     { icon: <SearchIcon />, label: "Search", routPath: "/SearchPage" },
   ];

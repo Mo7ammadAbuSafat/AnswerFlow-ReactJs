@@ -6,7 +6,7 @@ import Question from "./Question";
 import Answer from "./Answer";
 import Styles from "../Styling.module.css";
 import PopUpWithButton from "../Popup/PopUpWithButton";
-import FormAnswer from "./FormAnswer";
+import FormToAddAnswer from "./FormToAddAnswer";
 
 const FullQuestion = ({ questionId }) => {
   const [openPopup, setOpenPopup] = useState(false);
@@ -59,7 +59,7 @@ const FullQuestion = ({ questionId }) => {
             handleOpen={handleOpenPopup}
             handleClose={handleClosePopup}
           >
-            <FormAnswer
+            <FormToAddAnswer
               questionId={questionData.id}
               handleClose={handleClosePopup}
             />

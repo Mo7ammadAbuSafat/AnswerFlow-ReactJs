@@ -4,7 +4,7 @@ import Footer from "../../Components/Footer/Footer";
 import LeftSidebar from "../../Components/LeftSidebar/LeftSidebar";
 import Navbar2 from "../../Components/Navbar/Navbar2";
 import RightSidebar from "../../Components/RightSidebar/RightSidebar";
-import ThreeColumnLayout from "../../Components/ThreeColumnLayout";
+import ThreeColumnLayout from "../../Components/Layout/ThreeColumnLayout";
 import PopularTags from "../../Components/RightSidebar/PopularTags";
 import SuggestUsers from "../../Components/RightSidebar/SuggestUsers";
 

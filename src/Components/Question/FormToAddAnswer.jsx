@@ -4,7 +4,7 @@ import AuthContext from "../Store/AuthProvider";
 import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import axios from "axios";
 
-const FormAnswer = ({ questionId, handleClose }) => {
+const FormToAddAnswer = ({ questionId, handleClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
   const authContext = useContext(AuthContext);
@@ -83,4 +83,4 @@ const FormAnswer = ({ questionId, handleClose }) => {
   );
 };
 
-export default FormAnswer;
+export default FormToAddAnswer;

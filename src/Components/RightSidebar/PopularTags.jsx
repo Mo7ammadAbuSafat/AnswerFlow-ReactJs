@@ -12,7 +12,10 @@ const PopularTags = () => {
     };
     fetchData();
   }, []);
-  const tagNames = tags.map((tag) => tag.name);
+
+  const openLinkInNewTab = (url) => {
+    window.open(url, "_blank");
+  };
 
   return (
     <Box bgcolor={"background.paper"} margin={"40px 0 0 15px"}>
@@ -26,10 +29,10 @@ const PopularTags = () => {
         borderRadius={5}
         p={2}
       >
-        {tagNames.map((tag) => {
+        {tags.map((tag) => {
           return (
             <Chip
-              label={tag}
+              label={tag.name}
               sx={{
                 fontSize: "12px",
                 color: "white",
@@ -39,6 +42,11 @@ const PopularTags = () => {
               }}
               size={"small"}
               color={"default"}
+              onClick={
+                tag.sourceLink !== null
+                  ? () => openLinkInNewTab(tag.sourceLink)
+                  : false
+              }
             />
           );
         })}

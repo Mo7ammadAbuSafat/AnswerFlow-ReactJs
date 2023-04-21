@@ -3,8 +3,22 @@ import React, { useContext } from "react";
 import PopUpModal from "./PopUpModal";
 import AuthContext from "../Store/AuthProvider";
 
-const PopUpWithButton = ({ name, open, handleOpen, handleClose, children }) => {
+const PopUpWithButton = ({
+  isForExpert,
+  name,
+  open,
+  handleOpen,
+  handleClose,
+  children,
+}) => {
   const authContext = useContext(AuthContext);
+
+  var disabledButton = true;
+  if (authContext.isLoggedIn) {
+    if (isForExpert !== null && isForExpert) {
+      disabledButton = !(authContext.user.type === 2);
+    } else disabledButton = false;
+  }
   return (
     <>
       <Button
@@ -17,7 +31,7 @@ const PopUpWithButton = ({ name, open, handleOpen, handleClose, children }) => {
         onClick={() => handleOpen()}
         variant="contained"
         size="medium"
-        disabled={!authContext.isLoggedIn}
+        disabled={disabledButton}
       >
         {name}
       </Button>
