@@ -32,6 +32,7 @@
     color: #757575;
 }
 
-.votes:hover{
+.votes:hover, .mouseHaver:hover{
     cursor: pointer;
 }
+

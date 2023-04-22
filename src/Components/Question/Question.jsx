@@ -326,11 +326,13 @@ const Question = ({ questionData, showFullBody = true }) => {
               {questionData.editHistory.length !== 0 && (
                 <MenuItem onClick={handleHistoryClick}>Edit History</MenuItem>
               )}
-              {authContext.isLoggedIn && authContext.user.type === 2 && (
-                <MenuItem onClick={handleEditQuestionTagsClick}>
-                  Edit Tags
-                </MenuItem>
-              )}
+              {authContext.isLoggedIn &&
+                (authContext.user.type === 2 ||
+                  authContext.user.type === 3) && (
+                  <MenuItem onClick={handleEditQuestionTagsClick}>
+                    Edit Tags
+                  </MenuItem>
+                )}
             </Menu>
             <PopUpModal
               name={"Report Question"}

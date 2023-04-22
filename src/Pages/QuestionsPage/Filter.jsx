@@ -238,7 +238,7 @@ const Filter = ({ apiParams, setApiParams }) => {
                 <h3 style={{ color: "#757575", margin: "8px 0 0 0" }}>Tags</h3>
                 <Autocomplete
                   PaperComponent={({ children }) => (
-                    <Paper style={{ maxHeight: 200, overflowY: "auto" }}>
+                    <Paper style={{ maxHeight: 310, overflowY: "auto" }}>
                       {children}
                     </Paper>
                   )}

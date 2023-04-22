@@ -16,7 +16,9 @@ const PopUpWithButton = ({
   var disabledButton = true;
   if (authContext.isLoggedIn) {
     if (isForExpert !== null && isForExpert) {
-      disabledButton = !(authContext.user.type === 2);
+      disabledButton = !(
+        authContext.user.type === 2 || authContext.user.type === 3
+      );
     } else disabledButton = false;
   }
   return (

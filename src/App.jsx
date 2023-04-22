@@ -40,7 +40,7 @@ function App() {
               </ProtectedPage>
             }
           />
-          <Route path="ProfilePage" element={<ProfilePage />} />
+          <Route path="ProfilePage/:userId" element={<ProfilePage />} />
           <Route path="aboutUsPage" element={<AboutUsPage />} />
           <Route path="feedPage" element={<FeedPage />} />
           <Route path="QuestionsPage" element={<QuestionsPage />} />

@@ -5,15 +5,21 @@ import LeftSidebar from "../../Components/LeftSidebar/LeftSidebar";
 import RightSidebar from "../../Components/RightSidebar/RightSidebar";
 import Footer from "../../Components/Footer/Footer";
 import Profile from "./Profile";
+import SuggestUsers from "../../Components/RightSidebar/SuggestUsers";
+import { useParams } from "react-router-dom";
 
 const ProfilePage = () => {
+  const { userId } = useParams();
+
   return (
     <>
       <Navbar2 selectedLabel={"Profile"} />
       <ThreeColumnLayout>
         <LeftSidebar selectedLabel={"Profile"} />
-        <Profile />
-        <RightSidebar></RightSidebar>
+        <Profile userId={userId} />
+        <RightSidebar>
+          <SuggestUsers />
+        </RightSidebar>
       </ThreeColumnLayout>
       <Footer />
     </>

@@ -43,7 +43,7 @@ const LeftSidebarMenu = ({ selectedLabel }) => {
     listData.push({
       icon: <PersonIcon />,
       label: "Profile",
-      routPath: "/ProfilePage",
+      routPath: `/ProfilePage/${authContext.user.id}`,
     });
     listData.push({
       icon: <SettingsIcon />,

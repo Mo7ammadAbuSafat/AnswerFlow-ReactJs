@@ -68,21 +68,22 @@ const TagRow = ({ tag, followedTags, setFollowedTags }) => {
       <TableCell component="th" scope="row">
         {tag.name}
       </TableCell>
-      {authContext.isLoggedIn && authContext.user.type === 2 && (
-        <TableCell align="right">
-          <Button size="small" onClick={handleEditClick}>
-            Edit
-          </Button>
-          <PopUpModal
-            name={"Edit Tag"}
-            open={openEditPopup}
-            fullWidth={true}
-            handleClose={handleCloseEditPopup}
-          >
-            <FormToEditTag tag={tag} handleClose={handleCloseEditPopup} />
-          </PopUpModal>
-        </TableCell>
-      )}
+      {authContext.isLoggedIn &&
+        (authContext.user.type === 2 || authContext.user.type === 3) && (
+          <TableCell align="right">
+            <Button size="small" onClick={handleEditClick}>
+              Edit
+            </Button>
+            <PopUpModal
+              name={"Edit Tag"}
+              open={openEditPopup}
+              fullWidth={true}
+              handleClose={handleCloseEditPopup}
+            >
+              <FormToEditTag tag={tag} handleClose={handleCloseEditPopup} />
+            </PopUpModal>
+          </TableCell>
+        )}
 
       <TableCell align="right">
         <Button

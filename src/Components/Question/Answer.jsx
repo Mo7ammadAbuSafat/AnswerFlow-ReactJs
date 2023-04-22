@@ -217,14 +217,16 @@ const Answer = ({ answerData, showFullBody = true }) => {
                   <MenuItem onClick={handleEditAnswerClick}>Edit</MenuItem>,
                   <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>,
                 ]}
-              {authContext.isLoggedIn && authContext.user.type === 2 && (
-                <MenuItem
-                  disabled={isLoading || answerData.answerStatus === 1}
-                  onClick={handleApproveAnswerClick}
-                >
-                  Approve
-                </MenuItem>
-              )}
+              {authContext.isLoggedIn &&
+                (authContext.user.type === 2 ||
+                  authContext.user.type === 3) && (
+                  <MenuItem
+                    disabled={isLoading || answerData.answerStatus === 1}
+                    onClick={handleApproveAnswerClick}
+                  >
+                    Approve
+                  </MenuItem>
+                )}
             </Menu>
             <PopUpModal
               name={"Report Answer"}
