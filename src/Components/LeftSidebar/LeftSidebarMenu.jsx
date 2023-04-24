@@ -12,6 +12,7 @@ import StyleIcon from "@mui/icons-material/Style";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DynamicFeedTwoToneIcon from "@mui/icons-material/DynamicFeedTwoTone";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import React, { useContext } from "react";
 import AuthContext from "../Store/AuthProvider";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +26,7 @@ const LeftSidebarMenu = ({ selectedLabel }) => {
     }
     navigate(routPath);
   };
-  const listData = [
+  let listData = [
     { icon: <DynamicFeedTwoToneIcon />, label: "Feed", routPath: "/FeedPage" },
     {
       icon: <QuestionMarkIcon />,
@@ -55,6 +56,16 @@ const LeftSidebarMenu = ({ selectedLabel }) => {
       label: "Logout",
       routPath: "/signInPage",
     });
+    if (authContext.user.type === 3) {
+      listData = [
+        {
+          icon: <DashboardIcon />,
+          label: "Dashboard",
+          routPath: `/DashboardPage`,
+        },
+        ...listData,
+      ];
+    }
   }
   const listItems = listData.map((item, index) => {
     return (

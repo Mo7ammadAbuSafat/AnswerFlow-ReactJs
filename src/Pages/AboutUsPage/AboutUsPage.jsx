@@ -1,14 +1,13 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import Navbar from "../../Components/Navbar/Navbar";
-import styles from "./AboutUsPage.module.css";
 
 const AboutUsPage = () => {
   const navigate = useNavigate();
   return (
-    <div className={styles.aboutUsPage}>
+    <>
       <Navbar>
         <Button
           sx={{
@@ -25,8 +24,8 @@ const AboutUsPage = () => {
           Home
         </Button>
       </Navbar>
-      <div
-        style={{
+      <Typography
+        sx={{
           height: "calc(100vh - 80px)",
           display: "flex",
           justifyContent: "center",
@@ -35,9 +34,9 @@ const AboutUsPage = () => {
         }}
       >
         About Page
-      </div>
+      </Typography>
       <Footer />
-    </div>
+    </>
   );
 };
 
