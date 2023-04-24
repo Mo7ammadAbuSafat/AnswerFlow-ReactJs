@@ -16,6 +16,7 @@ import ProtectedPage from "./Pages/ProtectedPage/ProtectedPage";
 import QuestionsPage from "./Pages/QuestionsPage/QuestionsPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import TagsPage from "./Pages/TagsPage/TagsPage";
+import DashboardPage from "./Pages/DashboardPage/DashboardPage";
 
 function App() {
   return (
@@ -46,6 +47,14 @@ function App() {
           <Route path="QuestionsPage" element={<QuestionsPage />} />
           <Route path="questionsPage/:questionId" element={<QuestionPage />} />
           <Route path="TagsPage" element={<TagsPage />} />
+          <Route
+            path="DashboardPage"
+            element={
+              <ProtectedPage isForAdmin={true}>
+                <DashboardPage />
+              </ProtectedPage>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

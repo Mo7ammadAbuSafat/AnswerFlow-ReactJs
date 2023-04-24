@@ -131,7 +131,7 @@ const Filter = ({ apiParams, setApiParams }) => {
     <>
       <Box margin={"10px 0 20px 0"}>
         <Grid container spacing={3} justifyContent={"space-between"}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <Stack direction={"row"} alignItems={"center"} spacing={1}>
               <h3 style={{ color: "#757575", minWidth: "70px", margin: 0 }}>
                 Sort By
@@ -148,7 +148,7 @@ const Filter = ({ apiParams, setApiParams }) => {
               </Select>
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={3.5} alignItems={"center"}>
+          <Grid item xs={12} sm={4} alignItems={"center"}>
             <Stack direction={"row"} alignItems={"center"} spacing={1}>
               <h3 style={{ color: "#757575", width: "65px", margin: 0 }}>
                 Time
@@ -167,7 +167,7 @@ const Filter = ({ apiParams, setApiParams }) => {
               </Select>
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={2.5}>
+          <Grid item xs={12} sm={4}>
             <Stack direction={"row"} alignItems={"center"} spacing={1}>
               <h3 style={{ color: "#757575", minWidth: "53px", margin: 0 }}>
                 Show
