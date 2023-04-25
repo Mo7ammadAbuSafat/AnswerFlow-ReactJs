@@ -433,7 +433,7 @@ const Question = ({ questionData, showFullBody = true }) => {
             spacing={1.5}
             maxWidth={600}
             width={"100%"}
-            sx={{ padding: "0 5px" }}
+            sx={{ padding: "0 20px 0 0" }}
           >
             <p
               className={showFullBody ? Styles.title2 : Styles.title1}

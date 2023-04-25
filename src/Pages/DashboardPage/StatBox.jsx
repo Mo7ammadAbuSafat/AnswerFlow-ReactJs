@@ -36,7 +36,6 @@ const StatBox = ({ title, number, increase, icon }) => {
             <ArrowUpwardIcon />
             <Typography>{Math.floor(Math.abs(increase))}%</Typography>
           </Stack>
-
           <Typography
             sx={{
               fontSize: "12px",

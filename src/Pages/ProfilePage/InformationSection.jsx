@@ -1,18 +1,66 @@
 import {
   Avatar,
+  Box,
+  Button,
+  CircularProgress,
   Divider,
   Grid,
+  IconButton,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PopUpModal from "../../Components/Popup/PopUpModal";
 import Styles from "../../Components/Styling.module.css";
+import AuthContext from "../../Components/Store/AuthProvider";
+import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const InformationSection = ({ userData }) => {
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(
+    authContext.isLoggedIn &&
+      userData.followerUsers.some((user) => user.id === authContext.user.id)
+  );
+
+  const handleFollowClick = () => {
+    setIsLoading(true);
+    if (isFollowed) {
+      axios
+        .delete(
+          `https://localhost:7127/api/users/${authContext.user.id}/following/${userData.id}`
+        )
+        .catch((error) => {
+          if (error.response) {
+            alert(error.response.data.error);
+          } else {
+            alert("Error: ", error.message);
+          }
+        });
+      setIsFollowed(false);
+    } else {
+      axios
+        .post(
+          `https://localhost:7127/api/users/${authContext.user.id}/following/${userData.id}`
+        )
+        .catch((error) => {
+          if (error.response) {
+            alert(error.response.data.error);
+          } else {
+            alert("Error: ", error.message);
+          }
+        });
+      setIsFollowed(true);
+    }
+    setIsLoading(false);
+  };
+
   const followingUsers = userData.followingUsers.map((user) => {
     return (
       <>
@@ -64,24 +112,76 @@ const InformationSection = ({ userData }) => {
     <Grid container spacing={2} width={"100%"} marginTop={0.5}>
       <Grid
         item
-        xs={4}
+        xs={12}
+        sm={4}
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <img
           style={{ borderRadius: "50%" }}
           width={"80%"}
           alt=""
-          src={userData.image?.imagePath}
+          src={
+            userData.image !== null && userData.image.imagePath !== null
+              ? userData.image.imagePath
+              : "/Assets/defaultAvatar.png"
+          }
         />
       </Grid>
       <Grid
         item
-        xs={8}
+        xs={12}
+        sm={8}
         sx={{ display: "flex", gap: "15px", flexDirection: "column" }}
       >
-        <Typography variant="h5" gutterBottom color={"#303030"}>
-          {userData.username}
-        </Typography>
+        <Stack direction={"row"} spacing={2}>
+          <Typography variant="h5" color={"#303030"}>
+            {userData.username}
+          </Typography>
+          {authContext.isLoggedIn && authContext.user.id === userData.id ? (
+            <IconButton
+              onClick={() => navigate("/users/account")}
+              aria-label="settings"
+            >
+              <EditIcon sx={{ color: "#555" }} />
+            </IconButton>
+          ) : (
+            <Button
+              sx={{
+                textTransform: "none",
+              }}
+              variant={isFollowed ? "outlined" : "contained"}
+              size="small"
+              bgcolor={"#4489f8"}
+              disabled={!authContext.isLoggedIn}
+              onClick={handleFollowClick}
+            >
+              {isLoading ? (
+                <CircularProgress
+                  color="inherit"
+                  size={16}
+                  sx={{ marginRight: "5px" }}
+                />
+              ) : isFollowed ? (
+                "Unfollow"
+              ) : (
+                "Follow"
+              )}
+            </Button>
+          )}
+        </Stack>
+        {(userData.type === 2 || userData.type === 3) && (
+          <Box
+            justifyContent={"center"}
+            color="white"
+            width="90px"
+            p="5px"
+            display="flex"
+            borderRadius="5px"
+            backgroundColor={"#546564"}
+          >
+            {userData.type === 2 ? "Expert" : "Admin"}
+          </Box>
+        )}
         <Stack direction={"row"} spacing={3}>
           <Typography
             className={Styles.mouseHaver}

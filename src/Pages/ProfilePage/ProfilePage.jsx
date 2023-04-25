@@ -5,7 +5,6 @@ import LeftSidebar from "../../Components/LeftSidebar/LeftSidebar";
 import RightSidebar from "../../Components/RightSidebar/RightSidebar";
 import Footer from "../../Components/Footer/Footer";
 import Profile from "./Profile";
-import SuggestUsers from "../../Components/RightSidebar/SuggestUsers";
 import { useParams } from "react-router-dom";
 
 const ProfilePage = () => {
@@ -17,9 +16,7 @@ const ProfilePage = () => {
       <ThreeColumnLayout>
         <LeftSidebar selectedLabel={"Profile"} />
         <Profile userId={userId} />
-        <RightSidebar>
-          <SuggestUsers />
-        </RightSidebar>
+        <RightSidebar></RightSidebar>
       </ThreeColumnLayout>
       <Footer />
     </>

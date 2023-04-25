@@ -6,7 +6,6 @@ import Navbar2 from "../../Components/Navbar/Navbar2";
 import RightSidebar from "../../Components/RightSidebar/RightSidebar";
 import ThreeColumnLayout from "../../Components/Layout/ThreeColumnLayout";
 import PopularTags from "../../Components/RightSidebar/PopularTags";
-import SuggestUsers from "../../Components/RightSidebar/SuggestUsers";
 
 const FeedPage = () => {
   return (
@@ -17,7 +16,6 @@ const FeedPage = () => {
         <Feed />
         <RightSidebar>
           <PopularTags />
-          <SuggestUsers />
         </RightSidebar>
       </ThreeColumnLayout>
       <Footer />

@@ -1,4 +1,4 @@
-import { Avatar, Button, Fade, Menu, MenuItem } from "@mui/material";
+import { Avatar, Box, Button, Fade, Menu, MenuItem } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -34,75 +34,89 @@ function Navbar2({ selectedLabel }) {
         selectedLabel={selectedLabel}
       />
       <Navbar displayMenu={true} toggleDrawer={toggleDrawer}>
-        <Stack
-          justifyContent={"space-between"}
-          alignItems={"center"}
-          direction={"row"}
-          width={"70%"}
-          sx={{ display: { sm: "none", xs: "none", md: "flex", lg: "flex" } }}
+        <Box
+          sx={{ display: { sm: "none", xs: "none", md: "none", lg: "flex" } }}
         >
           <SearchAppBar />
-          {authContext.isLoggedIn ? (
-            <Stack direction={"row"} spacing={2} alignItems={"center"}>
-              <p style={{ color: "white" }}>{authContext.user.username}</p>
+        </Box>
+        {authContext.isLoggedIn ? (
+          <>
+            <Stack
+              sx={{ "&:hover": { cursor: "pointer" } }}
+              direction={"row"}
+              spacing={2}
+              alignItems={"center"}
+              onClick={handleClick}
+            >
+              <Box
+                sx={{
+                  display: { xs: "none", sm: "flex", md: "flex", lg: "flex" },
+                  color: "white",
+                }}
+              >
+                {authContext.user.username}
+              </Box>
               <Avatar
-                onClick={handleClick}
                 src={authContext.user.image?.imagePath}
                 sx={{ bgcolor: "#4489f8", border: "3px solid white" }}
               ></Avatar>
-              <Menu
-                id="fade-menu"
-                MenuListProps={{
-                  "aria-labelledby": "fade-button",
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                TransitionComponent={Fade}
-              >
-                <MenuItem
-                  onClick={() => {
-                    navigate("/ProfilePage");
-                    handleClose();
-                  }}
-                >
-                  Profile
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    navigate("/users/account");
-                    handleClose();
-                  }}
-                >
-                  My account
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    navigate("/signInPage");
-                    authContext.logout();
-                  }}
-                >
-                  Logout
-                </MenuItem>
-              </Menu>
             </Stack>
-          ) : (
-            <Button
-              sx={{
-                textTransform: "none",
-                height: "40px",
-                color: "white",
-                borderColor: "white",
-                marginLeft: "10px",
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
               }}
-              variant="outlined"
-              size="medium"
-              onClick={() => navigate("/signInPage")}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+              anchorOrigin={{
+                vertical: "center",
+                horizontal: "right",
+              }}
             >
-              Sign In
-            </Button>
-          )}
-        </Stack>
+              <MenuItem
+                onClick={() => {
+                  navigate("/ProfilePage");
+                  handleClose();
+                }}
+              >
+                Profile
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/users/account");
+                  handleClose();
+                }}
+              >
+                My account
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/signInPage");
+                  authContext.logout();
+                }}
+              >
+                Logout
+              </MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <Button
+            sx={{
+              textTransform: "none",
+              height: "40px",
+              color: "white",
+              borderColor: "white",
+              marginLeft: "10px",
+            }}
+            variant="outlined"
+            size="medium"
+            onClick={() => navigate("/signInPage")}
+          >
+            Sign In
+          </Button>
+        )}
       </Navbar>
     </>
   );
