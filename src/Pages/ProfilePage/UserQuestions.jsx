@@ -29,10 +29,10 @@ const UserQuestions = ({ userData }) => {
     return <div>loading ......</div>;
   }
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3} width="100%">
       {questions.map((question) => {
         return (
-          <Card sx={{ minWidth: 250, paddingRight: 3 }}>
+          <Card sx={{ minWidth: 250 }}>
             <Question
               key={question.id}
               questionData={question}

@@ -16,6 +16,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import React, { useContext } from "react";
 import AuthContext from "../Store/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 const LeftSidebarMenu = ({ selectedLabel }) => {
   const navigate = useNavigate();
@@ -27,20 +29,26 @@ const LeftSidebarMenu = ({ selectedLabel }) => {
     navigate(routPath);
   };
   let listData = [
+    { icon: <HomeIcon />, label: "Home", routPath: "/" },
     { icon: <DynamicFeedTwoToneIcon />, label: "Feed", routPath: "/FeedPage" },
     {
       icon: <QuestionMarkIcon />,
       label: "Questions",
       routPath: "/QuestionsPage",
     },
+    { icon: <SearchIcon />, label: "Search", routPath: "/SearchPage" },
     {
       icon: <StyleIcon />,
       label: "Tags",
       routPath: "/TagsPage",
     },
-    { icon: <SearchIcon />, label: "Search", routPath: "/SearchPage" },
   ];
   if (authContext.isLoggedIn) {
+    listData.push({
+      icon: <BookmarkIcon />,
+      label: "Saved Questions",
+      routPath: `/users/${authContext.user.id}/SavedQuestion`,
+    });
     listData.push({
       icon: <PersonIcon />,
       label: "Profile",
