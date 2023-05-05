@@ -69,8 +69,8 @@ const UserStatistics = ({ userId }) => {
         >
           <ApprovedAnswersProgress
             title="Approved Answers"
-            number={5}
-            increase={100 * (50 / 20)}
+            number={userStatistics.approvedAnswersCount}
+            increase={100 * (userStatistics.approvedAnswersCount / 50)}
             icon={
               <MarkChatReadIcon sx={{ color: "white", fontSize: "30px" }} />
             }

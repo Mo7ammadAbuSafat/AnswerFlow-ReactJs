@@ -17,6 +17,7 @@ import QuestionsPage from "./Pages/QuestionsPage/QuestionsPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import TagsPage from "./Pages/TagsPage/TagsPage";
 import DashboardPage from "./Pages/DashboardPage/DashboardPage";
+import SavedQuestionsPage from "./Pages/SavedQuestionsPage/SavedQuestionsPage";
 
 function App() {
   return (
@@ -38,6 +39,14 @@ function App() {
             element={
               <ProtectedPage>
                 <MyAccountPage />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="users/saved-questions"
+            element={
+              <ProtectedPage>
+                <SavedQuestionsPage />
               </ProtectedPage>
             }
           />

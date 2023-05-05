@@ -213,11 +213,13 @@ const Question = ({ questionData, showFullBody = true }) => {
   var isSavedInit = false;
   if (
     authContext.isLoggedIn &&
-    questionData.questionSavers.some((x) => x.Id === authContext.user.id)
+    questionData.questionSavers.some((x) => x.id === authContext.user.id)
   ) {
     isSavedInit = true;
   }
   const [isSaved, setIsSaved] = useState(isSavedInit);
+  console.log(questionData.questionSavers);
+  console.log(isSaved);
 
   const handleSaveQuestion = async () => {
     setIsLoading(true);

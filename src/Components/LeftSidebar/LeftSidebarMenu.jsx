@@ -46,8 +46,8 @@ const LeftSidebarMenu = ({ selectedLabel }) => {
   if (authContext.isLoggedIn) {
     listData.push({
       icon: <BookmarkIcon />,
-      label: "Saved Questions",
-      routPath: `/users/${authContext.user.id}/SavedQuestion`,
+      label: "Saved",
+      routPath: `/users/saved-questions`,
     });
     listData.push({
       icon: <PersonIcon />,

@@ -18,7 +18,9 @@ const Calender = ({ userId }) => {
             response.data.reduce((acc, curr) => {
               const dateObj = acc.find((obj) => obj.day === curr);
               if (dateObj) {
-                dateObj.value++;
+                if (dateObj.value < 4) {
+                  dateObj.value++;
+                }
               } else {
                 acc.push({ day: curr, value: 1 });
               }
@@ -40,17 +42,18 @@ const Calender = ({ userId }) => {
       to="2023-12-30"
       emptyColor="#eeeeee"
       colors={[
+        "white",
         "rgb(145, 218, 158)",
         "rgb(64, 196, 99)",
         "rgb(48, 161, 78)",
         "rgb(33, 110, 57)",
       ]}
-      margin={{ top: 40, right: 20, bottom: 40, left: 20 }}
+      margin={{ top: 40, right: 0, bottom: 40, left: 20 }}
       yearSpacing={40}
       monthBorderColor="#ffffff"
       dayBorderWidth={2}
       dayBorderColor="#ffffff"
-      isInteractive={true}
+      isInteractive={false}
       legends={[
         {
           anchor: "bottom-right",

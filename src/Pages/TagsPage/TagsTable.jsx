@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 import axios from "axios";
 import AuthContext from "../../Components/Store/AuthProvider";
 import TagRow from "./TagRow";
-import { Box, TextField } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, TextField } from "@mui/material";
 
 const TagsTable = () => {
   const authContext = useContext(AuthContext);
@@ -43,7 +43,11 @@ const TagsTable = () => {
     setSearchText(e.target.value);
   };
 
-  console.log(tags.filter((t) => t.name.includes(searchText)));
+  const [followingChecked, setFollowingChecked] = useState(false);
+
+  const handleFollowingCheckedChange = (event) => {
+    setFollowingChecked(event.target.checked);
+  };
 
   return (
     <>
@@ -61,11 +65,28 @@ const TagsTable = () => {
           sx={{ width: "300px" }}
         />
       </Box>
+      <FormControlLabel
+        disabled={!authContext.isLoggedIn}
+        control={
+          <Checkbox
+            checked={followingChecked}
+            onChange={handleFollowingCheckedChange}
+          />
+        }
+        label="Following"
+      />
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableBody>
             {tags
-              .filter((t) => t.name.includes(searchText))
+              .filter((t) => {
+                if (followingChecked) {
+                  return (
+                    t.name.includes(searchText) &&
+                    followedTags.some((x) => x.id === t.id)
+                  );
+                } else return t.name.includes(searchText);
+              })
               .map((tag) => (
                 <TagRow
                   tag={tag}
