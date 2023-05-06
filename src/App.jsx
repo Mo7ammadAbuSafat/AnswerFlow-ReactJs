@@ -26,12 +26,12 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route index element={<WelcomePage />} />
-          <Route path="signUpPage" element={<SignUpPage />} />
-          <Route path="signInPage" element={<SignInPage />} />
-          <Route path="verifyEmailPage/:userId" element={<VerifyEmailPage />} />
-          <Route path="resetPasswordPage1" element={<ResetPasswordPage1 />} />
+          <Route path="sign-up" element={<SignUpPage />} />
+          <Route path="sign-in" element={<SignInPage />} />
+          <Route path="verify-email/:email" element={<VerifyEmailPage />} />
+          <Route path="reset-password-code" element={<ResetPasswordPage1 />} />
           <Route
-            path="resetPasswordPage2/:userId"
+            path="reset-password/:email"
             element={<ResetPasswordPage2 />}
           />
           <Route

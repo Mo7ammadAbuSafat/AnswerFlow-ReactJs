@@ -1,10 +1,11 @@
-import { Button, CircularProgress, TextField } from "@mui/material";
 import axios from "axios";
 import Joi from "joi";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AlertContext from "../../Components/Store/AlertProvider";
-import SignContainer from "./SignContainer";
+import SignContainer from "../../Components/Sign/SignContainer";
+import MyTextField from "../../Components/Sign/MyTextField";
+import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
 
 const ResetPasswordPage1 = () => {
   const navigate = useNavigate();
@@ -43,7 +44,8 @@ const ResetPasswordPage1 = () => {
       setIsLoading(true);
       await axios
         .post(
-          `https://localhost:7127/api/users/reset-password-code?email=${email}`,
+          `https://localhost:7127/api/reset-password-code`,
+          JSON.stringify({ email: email }),
           {
             headers: {
               Accept: "application/json",
@@ -52,18 +54,13 @@ const ResetPasswordPage1 = () => {
           }
         )
         .then((response) => {
-          var userId = response.data.id;
           alertStates.handleOpenSuccessAlert();
-          navigate(`/resetPasswordPage2/${userId}`);
+          navigate(`/reset-password/${email}`);
         })
         .catch((error) => {
           if (error.response) {
             var errorMessage = error.response.data.error;
-            if (errorMessage === "This email is not exist") {
-              setEmailValidationError("this email is not exist");
-            } else {
-              setEmailValidationError(errorMessage);
-            }
+            setEmailValidationError(errorMessage);
           } else {
             alert("Error: ", error.message);
           }
@@ -74,40 +71,18 @@ const ResetPasswordPage1 = () => {
 
   return (
     <SignContainer>
-      <TextField
-        sx={{ width: "100%", margin: "10px 0 0 0" }}
+      <MyTextField
         label="Email"
-        type="email"
         name="email"
-        id="outlined"
         onChange={onChange}
         value={email}
-        helperText={emailValidationError}
-        error={emailValidationError !== " "}
+        validation={emailValidationError}
       />
-      <Button
-        sx={{
-          width: "130px",
-          height: "42px",
-          textTransform: "none",
-          background: "#4489f8",
-          margin: "10px 0 5px 0",
-        }}
-        variant="contained"
-        size="large"
+      <ButtonWithLoading
         onClick={onSubmit}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <CircularProgress
-            color="inherit"
-            size={16}
-            sx={{ marginRight: "5px" }}
-          />
-        ) : (
-          "Send Code"
-        )}
-      </Button>
+        isLoading={isLoading}
+        label={"Send Code"}
+      />
     </SignContainer>
   );
 };

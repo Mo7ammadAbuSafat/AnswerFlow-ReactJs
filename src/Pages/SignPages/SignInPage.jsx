@@ -1,30 +1,17 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-  Button,
-  CircularProgress,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
 import axios from "axios";
 import Joi from "joi";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AlertContext from "../../Components/Store/AlertProvider";
 import AuthContext from "../../Components/Store/AuthProvider";
-import SignContainer from "./SignContainer";
+import SignContainer from "../../Components/Sign/SignContainer";
+import MyPasswordInputField from "../../Components/Sign/MyPasswordInputField";
+import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
+import MyTextField from "../../Components/Sign/MyTextField";
 
 const SignInPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => event.preventDefault();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-
   const alertStates = useContext(AlertContext);
   const authContext = useContext(AuthContext);
 
@@ -76,40 +63,35 @@ const SignInPage = () => {
     if (CheckValidation) {
       setIsLoading(true);
       await axios
-        .post(
-          "https://localhost:7127/api/users/login",
-          JSON.stringify(inputs),
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        .post("https://localhost:7127/api/login", JSON.stringify(inputs), {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        })
         .then((response) => {
           authContext.login(response.data);
           alertStates.handleOpenSuccessAlert();
-          console.log(response.data);
           navigate("/feedPage");
         })
         .catch((error) => {
           if (error.response) {
             var errorMessage = error.response.data.error;
-            if (errorMessage === "Password is not correct") {
+            if (errorMessage === "password is not correct") {
               setValidationErrors({
                 ...validationErrors,
-                password: "incorrect password",
+                password: errorMessage,
               });
-            } else if (errorMessage === "this email is not exist") {
+            } else if (errorMessage === "no user with this email") {
               setValidationErrors({
                 ...validationErrors,
-                email: "this email is not exist",
+                email: errorMessage,
               });
-            } else if (errorMessage === "You must Verify your email") {
+            } else if (errorMessage === "you must verify your email") {
               axios
                 .get(`https://localhost:7127/api/users?email=${inputs.email}`)
                 .then((response) => {
-                  navigate(`/verifyEmailPage/${response.data.id}`);
+                  navigate(`/verify-email/${inputs.email}`);
                 });
             } else console.log(error);
           } else {
@@ -123,82 +105,34 @@ const SignInPage = () => {
 
   return (
     <SignContainer>
-      <TextField
-        sx={{ width: "100%", margin: "15px 0 5px 0" }}
+      <MyTextField
         label="Email"
-        type="email"
         name="email"
-        id="outlined"
         onChange={onChange}
         value={inputs.email}
-        helperText={validationErrors.email}
-        error={validationErrors.email !== " "}
+        validation={validationErrors.email}
       />
-      <FormControl sx={{ width: "100%", margin: "5px 0" }} variant="outlined">
-        <InputLabel
-          htmlFor="outlined-adornment-password"
-          error={validationErrors.password !== " "}
-        >
-          Password
-        </InputLabel>
-        <OutlinedInput
-          autoComplete="off"
-          error={validationErrors.password !== " "}
-          id="outlined-adornment-password"
-          name="password"
-          label="Password"
-          type={showPassword ? "text" : "password"}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          value={inputs.password}
-          onChange={onChange}
-        />
-        <FormHelperText error={validationErrors.password !== " "}>
-          {validationErrors.password}
-        </FormHelperText>
-      </FormControl>
-      <Button
-        sx={{
-          width: "101px",
-          height: "42px",
-          textTransform: "none",
-          background: "#4489f8",
-          margin: "10px 0",
-        }}
-        variant="contained"
-        size="large"
+      <MyPasswordInputField
+        name={"password"}
+        label={"Password"}
+        value={inputs.password}
+        onChange={onChange}
+        validation={validationErrors.password}
+      />
+      <ButtonWithLoading
         onClick={onSubmit}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <CircularProgress
-            color="inherit"
-            size={16}
-            sx={{ marginRight: "5px" }}
-          />
-        ) : (
-          "Sign In"
-        )}
-      </Button>
+        isLoading={isLoading}
+        label={"Login"}
+      />
       <p>
         Forget Password?{" "}
-        <span onClick={() => navigate("/resetPasswordPage1")}>
+        <span onClick={() => navigate("/reset-password-code")}>
           Reset Password
         </span>
       </p>
       <p style={{ marginBottom: "0" }}>
         You don't have an account?{" "}
-        <span onClick={() => navigate("/signUpPage")}>Sign Up</span>
+        <span onClick={() => navigate("/sign-up")}>Sign Up</span>
       </p>
     </SignContainer>
   );

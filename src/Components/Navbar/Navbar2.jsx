@@ -93,7 +93,7 @@ function Navbar2({ selectedLabel }) {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  navigate("/signInPage");
+                  navigate("/sign-in");
                   authContext.logout();
                 }}
               >
@@ -112,7 +112,7 @@ function Navbar2({ selectedLabel }) {
             }}
             variant="outlined"
             size="medium"
-            onClick={() => navigate("/signInPage")}
+            onClick={() => navigate("/sign-in")}
           >
             Sign In
           </Button>
