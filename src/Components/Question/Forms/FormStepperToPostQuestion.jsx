@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import axios from "axios";
-import AlertContext from "../Store/AlertProvider";
-import AuthContext from "../Store/AuthProvider";
+import AlertContext from "../../Store/AlertProvider";
+import AuthContext from "../../Store/AuthProvider";
 
 const steps = ["Write title and body", "Add tags", "Similar questions"];
 
@@ -115,6 +115,7 @@ const FormStepperToPostQuestion = ({ onClose }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          Authorization: `Bearer ${authContext.token}`,
         },
       })
       .then((response) => {

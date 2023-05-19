@@ -77,7 +77,7 @@ function Navbar2({ selectedLabel }) {
             >
               <MenuItem
                 onClick={() => {
-                  navigate("/ProfilePage");
+                  navigate(`/profile/${authContext.user.id}`);
                   handleClose();
                 }}
               >

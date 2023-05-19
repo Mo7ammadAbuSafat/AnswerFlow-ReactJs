@@ -4,8 +4,8 @@ import React, { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AlertContext from "../../Components/Store/AlertProvider";
 import SignContainer from "../../Components/Sign/SignContainer";
-import MyTextField from "../../Components/Sign/MyTextField";
-import MyPasswordInputField from "../../Components/Sign/MyPasswordInputField";
+import MyTextField from "../../Components/Inputs/MyTextField";
+import MyPasswordInputField from "../../Components/Inputs/MyPasswordInputField";
 import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
 import ResendCodePart from "../../Components/Sign/ResendCodePart";
 

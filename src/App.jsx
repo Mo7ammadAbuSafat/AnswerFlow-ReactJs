@@ -50,14 +50,14 @@ function App() {
               </ProtectedPage>
             }
           />
-          <Route path="ProfilePage/:userId" element={<ProfilePage />} />
-          <Route path="aboutUsPage" element={<AboutUsPage />} />
-          <Route path="feedPage" element={<FeedPage />} />
-          <Route path="QuestionsPage" element={<QuestionsPage />} />
-          <Route path="questionsPage/:questionId" element={<QuestionPage />} />
-          <Route path="TagsPage" element={<TagsPage />} />
+          <Route path="profile/:userId" element={<ProfilePage />} />
+          <Route path="about" element={<AboutUsPage />} />
+          <Route path="feed" element={<FeedPage />} />
+          <Route path="questions" element={<QuestionsPage />} />
+          <Route path="questions/:questionId" element={<QuestionPage />} />
+          <Route path="tags" element={<TagsPage />} />
           <Route
-            path="DashboardPage"
+            path="dashboard"
             element={
               <ProtectedPage isForAdmin={true}>
                 <DashboardPage />

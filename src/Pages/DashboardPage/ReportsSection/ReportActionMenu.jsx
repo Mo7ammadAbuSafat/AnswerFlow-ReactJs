@@ -1,16 +1,12 @@
 import { Fade, IconButton, Menu, MenuItem } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import axios from "axios";
+import AuthContext from "../../../Components/Store/AuthProvider";
 
-const ReportActionMenu = ({
-  reportId,
-  reportStatus,
-  contentType,
-  handleTrigger,
-}) => {
+const ReportActionMenu = ({ reportId, reportStatus, type, handleTrigger }) => {
+  const authContext = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -23,7 +19,17 @@ const ReportActionMenu = ({
   const handleCloseClick = async () => {
     setIsLoading(true);
     await axios
-      .put(`https://localhost:7127/api/reports/${contentType}s/${reportId}`)
+      .put(
+        `https://localhost:7127/api/${type}-reports/${reportId}`,
+        {},
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `bearer ${authContext.token}`,
+          },
+        }
+      )
       .catch((error) => {
         if (error.response) {
           alert(error.response.data.error);
@@ -57,10 +63,6 @@ const ReportActionMenu = ({
         >
           Close Report
         </MenuItem>
-        {/* <MenuItem onClick={() => console.log(id)}>
-          Block user from posting
-        </MenuItem>
-        <MenuItem onClick={() => console.log(id)}>Send Email To</MenuItem> */}
       </Menu>
     </>
   );

@@ -24,7 +24,7 @@ const Feed = () => {
     const fetchData = async () => {
       const apiUrl =
         tabValue === "following"
-          ? `https://localhost:7127/api/questions/users/${authContext.user.id}/following`
+          ? `https://localhost:7127/api/users/${authContext.user.id}/feed`
           : "https://localhost:7127/api/questions";
       await axios
         .get(apiUrl, {
@@ -35,6 +35,7 @@ const Feed = () => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            Authorization: `bearer ${authContext.token}`,
           },
         })
         .then((response) => {

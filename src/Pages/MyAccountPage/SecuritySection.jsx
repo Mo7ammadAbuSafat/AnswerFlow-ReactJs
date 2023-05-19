@@ -1,33 +1,14 @@
 import { Stack } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-  Button,
-  CircularProgress,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from "@mui/material";
 import React, { useContext, useState } from "react";
 import AlertContext from "../../Components/Store/AlertProvider";
 import Joi from "joi";
 import axios from "axios";
 import AuthContext from "../../Components/Store/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
+import MyPasswordInputField from "../../Components/Inputs/MyPasswordInputField";
 
 const SecuritySection = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => event.preventDefault();
-  const [showPassword1, setShowPassword1] = useState(false);
-  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
-  const handleMouseDownPassword1 = (event) => event.preventDefault();
-  const [showPassword2, setShowPassword2] = useState(false);
-  const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
-  const handleMouseDownPassword2 = (event) => event.preventDefault();
-
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
   const authContext = useContext(AuthContext);
@@ -97,12 +78,13 @@ const SecuritySection = () => {
       setIsLoading(true);
       await axios
         .put(
-          `https://localhost:7127/api/users/${authContext.user.id}/reset-password-by-old-password`,
+          `https://localhost:7127/api/users/${authContext.user.id}/change-password`,
           JSON.stringify(inputs),
           {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
+              Authorization: `bearer ${authContext.token}`,
             },
           }
         )
@@ -134,149 +116,40 @@ const SecuritySection = () => {
   };
 
   return (
-    <Stack alignItems={"center"} spacing={2}>
-      <FormControl
-        sx={{
-          maxWidth: "450px",
-          minWidth: "300px",
-          width: "100%",
-          marginTop: "40px",
-        }}
-        variant="outlined"
+    <Stack alignItems={"center"}>
+      <Stack
+        alignItems={"center"}
+        spacing={3}
+        width={"100%"}
+        maxWidth={"450px"}
       >
-        <InputLabel
-          htmlFor="outlined-adornment-password"
-          error={validationErrors.oldPassword !== " "}
-        >
-          Old Password
-        </InputLabel>
-        <OutlinedInput
-          autoComplete="off"
-          error={validationErrors.oldPassword !== " "}
-          id="outlined-adornment-password"
-          name="oldPassword"
-          label="oldPassword"
-          type={showPassword1 ? "text" : "password"}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword1}
-                onMouseDown={handleMouseDownPassword1}
-                edge="end"
-              >
-                {showPassword1 ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
+        <MyPasswordInputField
+          name={"oldPassword"}
+          label={"Old Password"}
           value={inputs.oldPassword}
           onChange={onChange}
+          validation={validationErrors.oldPassword}
         />
-        <FormHelperText error={validationErrors.oldPassword !== " "}>
-          {validationErrors.oldPassword}
-        </FormHelperText>
-      </FormControl>
-      <FormControl
-        sx={{
-          maxWidth: "450px",
-          minWidth: "300px",
-          width: "100%",
-        }}
-        variant="outlined"
-      >
-        <InputLabel
-          htmlFor="outlined-adornment-password"
-          error={validationErrors.newPassword !== " "}
-        >
-          New Password
-        </InputLabel>
-        <OutlinedInput
-          autoComplete="off"
-          error={validationErrors.newPassword !== " "}
-          id="outlined-adornment-password"
-          name="newPassword"
-          label="newPassword"
-          type={showPassword ? "text" : "password"}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
+        <MyPasswordInputField
+          name={"newPassword"}
+          label={"New Password"}
           value={inputs.newPassword}
           onChange={onChange}
+          validation={validationErrors.newPassword}
         />
-        <FormHelperText error={validationErrors.newPassword !== " "}>
-          {validationErrors.newPassword}
-        </FormHelperText>
-      </FormControl>
-      <FormControl
-        sx={{
-          maxWidth: "450px",
-          minWidth: "300px",
-          width: "100%",
-        }}
-        variant="outlined"
-      >
-        <InputLabel
-          htmlFor="outlined-adornment-password1"
-          error={validationErrors.confirmNewPassword !== " "}
-        >
-          Confirm New Password
-        </InputLabel>
-        <OutlinedInput
-          autoComplete="off"
-          error={validationErrors.confirmNewPassword !== " "}
-          id="outlined-adornment-password1"
-          type={showPassword2 ? "text" : "password"}
-          name="confirmNewPassword"
-          label="Confirm New Password"
+        <MyPasswordInputField
+          name={"confirmNewPassword"}
+          label={"Confirm New Password"}
           value={inputs.confirmNewPassword}
           onChange={onChange}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword2}
-                onMouseDown={handleMouseDownPassword2}
-                edge="end"
-              >
-                {showPassword2 ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
+          validation={validationErrors.confirmNewPassword}
         />
-        <FormHelperText error={validationErrors.confirmNewPassword !== " "}>
-          {validationErrors.confirmNewPassword}
-        </FormHelperText>
-      </FormControl>
-      <Button
-        sx={{
-          height: "40px",
-          background: "#4489f8",
-          textTransform: "none",
-        }}
-        variant="contained"
-        size="large"
-        onClick={onSubmit}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <CircularProgress
-            color="inherit"
-            size={16}
-            sx={{ marginRight: "5px" }}
-          />
-        ) : (
-          "Reset Password"
-        )}
-      </Button>
+        <ButtonWithLoading
+          onClick={onSubmit}
+          isLoading={isLoading}
+          label={"Reset Password"}
+        />
+      </Stack>
     </Stack>
   );
 };

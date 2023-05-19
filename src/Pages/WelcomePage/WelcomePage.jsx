@@ -84,7 +84,7 @@ const WelcomePage = (props) => {
                 marginRight: "50px",
                 textTransform: "none",
               }}
-              onClick={() => navigate("/feedPage")}
+              onClick={() => navigate("/feed")}
               variant="contained"
               size="large"
             >
@@ -92,7 +92,7 @@ const WelcomePage = (props) => {
             </Button>
             <Button
               sx={{ width: "140px", textTransform: "none" }}
-              onClick={() => navigate("/aboutUsPage")}
+              onClick={() => navigate("/about")}
               variant="outlined"
               size="large"
             >

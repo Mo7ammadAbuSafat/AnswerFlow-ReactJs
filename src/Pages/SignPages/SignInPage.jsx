@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import AlertContext from "../../Components/Store/AlertProvider";
 import AuthContext from "../../Components/Store/AuthProvider";
 import SignContainer from "../../Components/Sign/SignContainer";
-import MyPasswordInputField from "../../Components/Sign/MyPasswordInputField";
+import MyPasswordInputField from "../../Components/Inputs/MyPasswordInputField";
 import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
-import MyTextField from "../../Components/Sign/MyTextField";
+import MyTextField from "../../Components/Inputs/MyTextField";
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ const SignInPage = () => {
         .then((response) => {
           authContext.login(response.data);
           alertStates.handleOpenSuccessAlert();
-          navigate("/feedPage");
+          navigate("/feed");
         })
         .catch((error) => {
           if (error.response) {

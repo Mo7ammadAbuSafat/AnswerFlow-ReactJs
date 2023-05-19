@@ -23,24 +23,24 @@ const LeftSidebarMenu = ({ selectedLabel }) => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
   const handleClick = (routPath) => {
-    if (routPath === "/signInPage") {
+    if (routPath === "/sign-in") {
       authContext.logout();
     }
     navigate(routPath);
   };
   let listData = [
     { icon: <HomeIcon />, label: "Home", routPath: "/" },
-    { icon: <DynamicFeedTwoToneIcon />, label: "Feed", routPath: "/FeedPage" },
+    { icon: <DynamicFeedTwoToneIcon />, label: "Feed", routPath: "/feed" },
     {
       icon: <QuestionMarkIcon />,
       label: "Questions",
-      routPath: "/QuestionsPage",
+      routPath: "/questions",
     },
-    { icon: <SearchIcon />, label: "Search", routPath: "/SearchPage" },
+    { icon: <SearchIcon />, label: "Search", routPath: "/search" },
     {
       icon: <StyleIcon />,
       label: "Tags",
-      routPath: "/TagsPage",
+      routPath: "/tags",
     },
   ];
   if (authContext.isLoggedIn) {
@@ -52,7 +52,7 @@ const LeftSidebarMenu = ({ selectedLabel }) => {
     listData.push({
       icon: <PersonIcon />,
       label: "Profile",
-      routPath: `/ProfilePage/${authContext.user.id}`,
+      routPath: `/profile/${authContext.user.id}`,
     });
     listData.push({
       icon: <SettingsIcon />,
@@ -62,14 +62,14 @@ const LeftSidebarMenu = ({ selectedLabel }) => {
     listData.push({
       icon: <LogoutIcon />,
       label: "Logout",
-      routPath: "/signInPage",
+      routPath: "/sign-in",
     });
     if (authContext.user.type === 3) {
       listData = [
         {
           icon: <DashboardIcon />,
           label: "Dashboard",
-          routPath: `/DashboardPage`,
+          routPath: `/dashboard`,
         },
         ...listData,
       ];

@@ -7,12 +7,15 @@ const Calender = ({ userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get(`https://localhost:7127/api/users/${userId}/calendar-statistics`, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        })
+        .get(
+          `https://localhost:7127/api/statistics/calendar-statistics/users/${userId}`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((response) => {
           setData(
             response.data.reduce((acc, curr) => {

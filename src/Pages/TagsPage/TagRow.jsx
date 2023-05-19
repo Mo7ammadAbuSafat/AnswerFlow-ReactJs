@@ -13,16 +13,25 @@ const TagRow = ({ tag, followedTags, setFollowedTags }) => {
     window.open(url, "_blank");
   };
 
-  const handleFollowClick = () => {
+  const handleFollowClick = async () => {
     setIsLoading(true);
-    axios
+    await axios
       .post(
-        `https://localhost:7127/api/users/${authContext.user.id}/tags/${tag.id}/following`
+        `https://localhost:7127/api/users/${authContext.user.id}/following-tags/${tag.id}`,
+        {},
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `bearer ${authContext.token}`,
+          },
+        }
       )
       .then((response) => {
         setFollowedTags([...followedTags, tag]);
       })
       .catch((error) => {
+        console.log(error);
         if (error.response) {
           alert(error.response.data.error);
         } else {
@@ -31,11 +40,18 @@ const TagRow = ({ tag, followedTags, setFollowedTags }) => {
       });
     setIsLoading(false);
   };
-  const handleUnfollowClick = () => {
+  const handleUnfollowClick = async () => {
     setIsLoading(true);
-    axios
+    await axios
       .delete(
-        `https://localhost:7127/api/users/${authContext.user.id}/tags/${tag.id}/following`
+        `https://localhost:7127/api/users/${authContext.user.id}/following-tags/${tag.id}`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `bearer ${authContext.token}`,
+          },
+        }
       )
       .then((response) => {
         setFollowedTags(followedTags.filter((t) => t.id !== tag.id));

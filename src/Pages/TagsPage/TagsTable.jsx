@@ -26,7 +26,7 @@ const TagsTable = () => {
     const fetchData = async () => {
       await axios
         .get(
-          `https://localhost:7127/api/users/${authContext.user.id}/tags/following`
+          `https://localhost:7127/api/users/${authContext.user.id}/following-tags`
         )
         .then((response) => {
           setFollowedTags(response.data);

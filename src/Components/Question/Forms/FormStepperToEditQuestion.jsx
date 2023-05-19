@@ -13,7 +13,8 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import axios from "axios";
-import AlertContext from "../Store/AlertProvider";
+import AlertContext from "../../Store/AlertProvider";
+import AuthContext from "../../Store/AuthProvider";
 
 const steps = ["title and body", "tags"];
 
@@ -21,6 +22,7 @@ const FormStepperToEditQuestion = ({ questionData, onClose }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
 
   const [inputs, setInputs] = useState({
     title: questionData.title,
@@ -117,6 +119,7 @@ const FormStepperToEditQuestion = ({ questionData, onClose }) => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authContext.token}`,
           },
         }
       )

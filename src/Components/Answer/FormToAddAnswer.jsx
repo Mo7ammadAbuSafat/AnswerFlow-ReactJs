@@ -4,7 +4,7 @@ import AuthContext from "../Store/AuthProvider";
 import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import axios from "axios";
 
-const FormReport = ({ apiUrl, handleClose }) => {
+const FormToAddAnswer = ({ questionId, handleClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
   const authContext = useContext(AuthContext);
@@ -21,15 +21,20 @@ const FormReport = ({ apiUrl, handleClose }) => {
       setIsLoading(true);
       const data = {
         userId: authContext.user.id,
-        description: body,
+        body: body,
       };
       await axios
-        .post(apiUrl, JSON.stringify(data), {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        })
+        .post(
+          `https://localhost:7127/api/questions/${questionId}/answers`,
+          JSON.stringify(data),
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authContext.token}`,
+            },
+          }
+        )
         .then((response) => {
           alertStates.handleOpenSuccessAlert();
           handleClose();
@@ -56,7 +61,7 @@ const FormReport = ({ apiUrl, handleClose }) => {
       <TextField
         sx={{ width: "100%" }}
         id="outlined-multiline-static"
-        label="Description"
+        label="Body"
         name="body"
         onChange={(e) => onChange(e.target.value)}
         value={body}
@@ -72,11 +77,11 @@ const FormReport = ({ apiUrl, handleClose }) => {
             sx={{ marginRight: "5px" }}
           />
         ) : (
-          "Report"
+          "Post"
         )}
       </Button>
     </Stack>
   );
 };
 
-export default FormReport;
+export default FormToAddAnswer;

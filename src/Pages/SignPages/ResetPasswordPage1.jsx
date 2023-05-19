@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AlertContext from "../../Components/Store/AlertProvider";
 import SignContainer from "../../Components/Sign/SignContainer";
-import MyTextField from "../../Components/Sign/MyTextField";
+import MyTextField from "../../Components/Inputs/MyTextField";
 import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
 
 const ResetPasswordPage1 = () => {

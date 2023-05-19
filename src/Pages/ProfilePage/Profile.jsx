@@ -26,14 +26,14 @@ const Profile = ({ userId }) => {
         .catch((error) => {
           if (error.response) {
             var errorMessage = error.response.data.error;
-            if (errorMessage === "No user with this id") {
+            if (errorMessage === "no user with this id") {
               navigate(`/*`);
             }
           }
         });
     };
     fetchData();
-  }, [userId, navigate]);
+  }, [userId]);
 
   if (userData === null) return <Stack flex={4}>loading......</Stack>;
   return (

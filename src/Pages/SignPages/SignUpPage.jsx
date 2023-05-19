@@ -3,8 +3,8 @@ import Joi from "joi";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignContainer from "../../Components/Sign/SignContainer";
-import MyTextField from "../../Components/Sign/MyTextField";
-import MyPasswordInputField from "../../Components/Sign/MyPasswordInputField";
+import MyTextField from "../../Components/Inputs/MyTextField";
+import MyPasswordInputField from "../../Components/Inputs/MyPasswordInputField";
 import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
 
 const SignUpPage = () => {

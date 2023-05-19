@@ -18,7 +18,7 @@ const SavedQuestions = () => {
     const fetchData = async () => {
       await axios
         .get(
-          `https://localhost:7127/api/questions/users/${authContext.user.id}/saved`,
+          `https://localhost:7127/api/users/${authContext.user.id}/saved-questions`,
           {
             params: {
               pageNumber: pageNumber,
@@ -27,6 +27,7 @@ const SavedQuestions = () => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
+              Authorization: `bearer ${authContext.token}`,
             },
           }
         )

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import AlertContext from "../../Components/Store/AlertProvider";
 import axios from "axios";
 import AuthContext from "../../Components/Store/AuthProvider";
+import MyTextField from "../../Components/Inputs/MyTextField";
+import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
 
 const BasicSection = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +14,7 @@ const BasicSection = () => {
   const navigate = useNavigate();
 
   if (!authContext.isLoggedIn) {
-    navigate("/signInPage");
+    navigate("/sign-in");
   }
 
   const [inputs, setInputs] = useState({
@@ -54,17 +56,17 @@ const BasicSection = () => {
       setIsLoading(true);
       await axios
         .put(
-          `https://localhost:7127/api/users/${authContext.user.id}/user-information`,
+          `https://localhost:7127/api/users/${authContext.user.id}`,
           JSON.stringify(inputs),
           {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
+              Authorization: `bearer ${authContext.token}`,
             },
           }
         )
         .then((response) => {
-          authContext.login(response.data);
           alertStates.handleOpenSuccessAlert();
         })
         .catch((error) => {
@@ -87,7 +89,6 @@ const BasicSection = () => {
           maxWidth: "450px",
           minWidth: "300px",
           width: "100%",
-          marginTop: "40px",
         }}
         id="outlined"
         disabled
@@ -121,26 +122,11 @@ const BasicSection = () => {
         multiline
         rows={5}
       />
-      <Button
-        sx={{
-          height: "40px",
-          background: "#4489f8",
-          textTransform: "none",
-        }}
-        variant="contained"
+      <ButtonWithLoading
         onClick={onSubmit}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <CircularProgress
-            color="inherit"
-            size={16}
-            sx={{ marginRight: "5px" }}
-          />
-        ) : (
-          "Update"
-        )}
-      </Button>
+        isLoading={isLoading}
+        label={"Update"}
+      />
     </Stack>
   );
 };

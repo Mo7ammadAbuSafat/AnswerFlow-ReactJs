@@ -1,12 +1,12 @@
 import { Grid, Stack } from "@mui/material";
 import React from "react";
-import StatBox from "../DashboardPage/StatBox";
 import { useState } from "react";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import { useEffect } from "react";
 import axios from "axios";
 import ApprovedAnswersProgress from "./ApprovedAnswersProgress";
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
+import StatBox from "../DashboardPage/StatisticsSection/StatBox";
 
 const UserStatistics = ({ userId }) => {
   const [userStatistics, setUserStatistics] = useState({
@@ -17,7 +17,7 @@ const UserStatistics = ({ userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get(`https://localhost:7127/api/users/${userId}/statistics`, {
+        .get(`https://localhost:7127/api/statistics/users/${userId}`, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",

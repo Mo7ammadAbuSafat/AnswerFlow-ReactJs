@@ -2,8 +2,10 @@ import React, { useContext, useState } from "react";
 import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import axios from "axios";
 import AlertContext from "../../Components/Store/AlertProvider";
+import AuthContext from "../../Components/Store/AuthProvider";
 
 const FormToEditTag = ({ tag, handleClose }) => {
+  const authContext = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
 
@@ -39,6 +41,7 @@ const FormToEditTag = ({ tag, handleClose }) => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
+              Authorization: `bearer ${authContext.token}`,
             },
           }
         )

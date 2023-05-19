@@ -1,7 +1,7 @@
 import { Box, Card, Grid, Pagination, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PopUpWithButton from "../../Components/Popup/PopUpWithButton";
-import FormStepperToPostQuestion from "../../Components/Question/FormStepperToPostQuestion";
+import FormStepperToPostQuestion from "../../Components/Question/Forms/FormStepperToPostQuestion";
 import Question from "../../Components/Question/Question";
 import axios from "axios";
 import Filter from "./Filter";

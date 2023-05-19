@@ -6,7 +6,7 @@ import AuthContext from "../../Components/Store/AuthProvider";
 import SignContainer from "../../Components/Sign/SignContainer";
 import ResendCodePart from "../../Components/Sign/ResendCodePart";
 import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
-import MyTextField from "../../Components/Sign/MyTextField";
+import MyTextField from "../../Components/Inputs/MyTextField";
 
 const VerifyEmailPage = () => {
   const navigate = useNavigate();
