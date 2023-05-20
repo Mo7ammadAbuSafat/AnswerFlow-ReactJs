@@ -18,6 +18,7 @@ import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import TagsPage from "./Pages/TagsPage/TagsPage";
 import DashboardPage from "./Pages/DashboardPage/DashboardPage";
 import SavedQuestionsPage from "./Pages/SavedQuestionsPage/SavedQuestionsPage";
+import SearchPage from "./Pages/SearchPage/SearchPage";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
           <Route path="feed" element={<FeedPage />} />
           <Route path="questions" element={<QuestionsPage />} />
           <Route path="questions/:questionId" element={<QuestionPage />} />
+          <Route path="search" element={<SearchPage />} />
           <Route path="tags" element={<TagsPage />} />
           <Route
             path="dashboard"
