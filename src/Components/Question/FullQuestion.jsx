@@ -3,10 +3,11 @@ import { Box, Divider, Grid } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Question from "./Question";
-import Answer from "./Answer";
 import Styles from "../Styling.module.css";
 import PopUpWithButton from "../Popup/PopUpWithButton";
-import FormToAddAnswer from "./FormToAddAnswer";
+import FormToAddAnswer from "../Answer/FormToAddAnswer";
+import Answer from "../Answer/Answer";
+import Answers from "../Answer/Answers";
 
 const FullQuestion = ({ questionId }) => {
   const [openPopup, setOpenPopup] = useState(false);
@@ -66,15 +67,7 @@ const FullQuestion = ({ questionId }) => {
           </PopUpWithButton>
         </Grid>
       </Grid>
-
-      {questionData.answers.map((answer) => {
-        return (
-          <>
-            <Divider />
-            <Answer answerData={answer} />
-          </>
-        );
-      })}
+      <Answers questionId={questionData.id} />
     </Box>
   );
 };

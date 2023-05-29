@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../Components/Navbar/Navbar";
+import Navbar from "../Navbar/Navbar";
 import styles from "./Sign.module.css";
 
 const SignContainer = ({ children }) => {

@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
-import PopUpModal from "../../Components/Popup/PopUpModal";
+import PopUpModal from "../../../Components/Popup/PopUpModal";
 
 const ReportContent = ({ contentType, children }) => {
   const [openContentPopup, setOpenContentPopup] = useState(false);

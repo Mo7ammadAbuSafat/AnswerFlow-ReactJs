@@ -10,11 +10,13 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import axios from "axios";
-import AlertContext from "../Store/AlertProvider";
+import AlertContext from "../../Store/AlertProvider";
+import AuthContext from "../../Store/AuthProvider";
 
 const FormToEditQuestionTags = ({ questionData, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
 
   const [selectedTags, setSelectedTags] = useState(
     questionData.tags.map((tag) => tag.name)
@@ -61,6 +63,7 @@ const FormToEditQuestionTags = ({ questionData, onClose }) => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authContext.token}`,
           },
         }
       )

@@ -1,11 +1,11 @@
 import { Stack } from "@mui/material";
 import React from "react";
 
-const DashboardCard = ({ children }) => {
+const TableCard = ({ children }) => {
   return (
     <Stack
-      p={3}
-      direction={"row"}
+      p={1.5}
+      direction={"column"}
       justifyContent={"space-between"}
       sx={{
         borderRadius: "30px",
@@ -17,4 +17,4 @@ const DashboardCard = ({ children }) => {
   );
 };
 
-export default DashboardCard;
+export default TableCard;

@@ -1,31 +1,12 @@
 import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReportActionMenu from "./ReportActionMenu";
 import QuestionOverView from "./QuestionOverView";
 import AnswerOverview from "./AnswerOverview";
 import ReportContent from "./ReportContent";
 
-const Reports = () => {
-  const [trigger, setTrigger] = useState(false);
-  const handleTrigger = () => setTrigger(!trigger);
-  const [reports, setReports] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .get(`https://localhost:7127/api/reports`, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          setReports(response.data);
-        });
-    };
-    fetchData();
-  }, [trigger]);
+const ReportTable = ({ reports, handleTrigger }) => {
   const columns = [
     {
       field: "user",
@@ -44,15 +25,15 @@ const Reports = () => {
       },
     },
     {
-      field: "contentType",
+      field: "type",
       headerName: "Content",
       flex: 1,
-      renderCell: ({ row: { contentType, question, answer } }) => (
-        <ReportContent contentType={contentType}>
-          {contentType === "question" ? (
-            <QuestionOverView question={question} />
+      renderCell: ({ row: { type, questionId, answerId } }) => (
+        <ReportContent contentType={type}>
+          {type === "question" ? (
+            <QuestionOverView questionId={questionId} />
           ) : (
-            <AnswerOverview answer={answer} />
+            <AnswerOverview answerId={answerId} questionId={questionId} />
           )}
         </ReportContent>
       ),
@@ -91,36 +72,31 @@ const Reports = () => {
       field: "action",
       headerName: " ",
       flex: 0.5,
-      renderCell: ({ row: { id, status, contentType } }) => (
+      renderCell: ({ row: { id, status, type } }) => (
         <>
           <ReportActionMenu
             reportId={id}
             reportStatus={status}
-            contentType={contentType}
+            type={type}
             handleTrigger={handleTrigger}
           />
         </>
       ),
     },
   ];
-
   return (
-    <Box
-      height={"500px"}
+    <DataGrid
+      disableRowSelectionOnClick={true}
       sx={{
-        "& .MuiDataGrid-root": { border: "none" },
-        "& .MuiDataGrid-columnHeaderTitle": {
-          fontWeight: "bold",
+        "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+          outline: "none !important",
         },
       }}
-    >
-      <DataGrid
-        rows={reports}
-        columns={columns}
-        components={{ Toolbar: GridToolbar }}
-      />
-    </Box>
+      rows={reports}
+      columns={columns}
+      components={{ Toolbar: GridToolbar }}
+    />
   );
 };
 
-export default Reports;
+export default ReportTable;

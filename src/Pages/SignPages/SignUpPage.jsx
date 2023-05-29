@@ -1,28 +1,13 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-  Button,
-  CircularProgress,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
 import axios from "axios";
 import Joi from "joi";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SignContainer from "./SignContainer";
+import SignContainer from "../../Components/Sign/SignContainer";
+import MyTextField from "../../Components/Inputs/MyTextField";
+import MyPasswordInputField from "../../Components/Inputs/MyPasswordInputField";
+import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
 
 const SignUpPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => event.preventDefault();
-  const [showPassword2, setShowPassword2] = useState(false);
-  const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
-  const handleMouseDownPassword2 = (event) => event.preventDefault();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -95,7 +80,7 @@ const SignUpPage = () => {
       setIsLoading(true);
       await axios
         .post(
-          "https://localhost:7127/api/users/registration",
+          "https://localhost:7127/api/registration",
           JSON.stringify(inputs),
           {
             headers: {
@@ -105,8 +90,7 @@ const SignUpPage = () => {
           }
         )
         .then((response) => {
-          var userId = response.data.id;
-          navigate(`/verifyEmailPage/${userId}`);
+          navigate(`/verify-email/${inputs.email}`);
         })
         .catch((error) => {
           if (error.response) {
@@ -114,14 +98,9 @@ const SignUpPage = () => {
             if (errorMessage === "this email is already exist") {
               setValidationErrors({
                 ...validationErrors,
-                email: "this email is already exist",
+                email: errorMessage,
               });
-            } else {
-              console.log(errorMessage);
             }
-          } else {
-            console.log(error);
-            alert("Error: ", error.message);
           }
         });
     }
@@ -130,121 +109,42 @@ const SignUpPage = () => {
 
   return (
     <SignContainer>
-      <TextField
-        sx={{ width: "100%", margin: "10px 0 5px 0" }}
+      <MyTextField
         label="Email"
-        type="email"
         name="email"
-        id="outlined"
         onChange={onChange}
         value={inputs.email}
-        helperText={validationErrors.email}
-        error={validationErrors.email !== " "}
+        validation={validationErrors.email}
       />
-      <TextField
-        sx={{ width: "100%", margin: "5px 0" }}
+      <MyTextField
         label="Username"
         name="username"
-        id="outlined"
         onChange={onChange}
         value={inputs.username}
-        helperText={validationErrors.username}
-        error={validationErrors.username !== " "}
+        validation={validationErrors.username}
       />
-
-      <FormControl sx={{ width: "100%", margin: "5px 0" }} variant="outlined">
-        <InputLabel
-          htmlFor="outlined-adornment-password"
-          error={validationErrors.password !== " "}
-        >
-          Password
-        </InputLabel>
-        <OutlinedInput
-          autoComplete="off"
-          error={validationErrors.password !== " "}
-          id="outlined-adornment-password"
-          type={showPassword ? "text" : "password"}
-          name="password"
-          label="Password"
-          value={inputs.password}
-          onChange={onChange}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        <FormHelperText error={validationErrors.password !== " "}>
-          {validationErrors.password}
-        </FormHelperText>
-      </FormControl>
-      <FormControl sx={{ width: "100%", margin: "5px 0" }} variant="outlined">
-        <InputLabel
-          htmlFor="outlined-adornment-password1"
-          error={validationErrors.confirmPassword !== " "}
-        >
-          Confirm Password
-        </InputLabel>
-        <OutlinedInput
-          autoComplete="off"
-          error={validationErrors.confirmPassword !== " "}
-          id="outlined-adornment-password1"
-          type={showPassword2 ? "text" : "password"}
-          name="confirmPassword"
-          label="ConfirmPassword"
-          value={inputs.confirmPassword}
-          onChange={onChange}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword2}
-                onMouseDown={handleMouseDownPassword2}
-                edge="end"
-              >
-                {showPassword2 ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        <FormHelperText error={validationErrors.confirmPassword !== " "}>
-          {validationErrors.confirmPassword}
-        </FormHelperText>
-      </FormControl>
-
-      <Button
-        sx={{
-          width: "101px",
-          height: "42px",
-          textTransform: "none",
-          background: "#4489f8",
-          margin: "10px 0 5px 0",
-        }}
-        variant="contained"
-        size="large"
+      <MyPasswordInputField
+        name={"password"}
+        label={"Password"}
+        value={inputs.password}
+        onChange={onChange}
+        validation={validationErrors.password}
+      />
+      <MyPasswordInputField
+        name={"confirmPassword"}
+        label={"Confirm Password"}
+        value={inputs.confirmPassword}
+        onChange={onChange}
+        validation={validationErrors.confirmPassword}
+      />
+      <ButtonWithLoading
         onClick={onSubmit}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <CircularProgress
-            color="inherit"
-            size={16}
-            sx={{ marginRight: "5px" }}
-          />
-        ) : (
-          "Sign Up"
-        )}
-      </Button>
+        isLoading={isLoading}
+        label={"Sign Up"}
+      />
       <p style={{ marginBottom: "0" }}>
         You have an account?{" "}
-        <span onClick={() => navigate("/signInPage")}>Sign In</span>
+        <span onClick={() => navigate("/sign-in")}>Sign In</span>
       </p>
     </SignContainer>
   );

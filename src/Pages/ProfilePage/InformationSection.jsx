@@ -29,13 +29,21 @@ const InformationSection = ({ userData }) => {
       userData.followerUsers.some((user) => user.id === authContext.user.id)
   );
 
-  const handleFollowClick = () => {
+  const handleFollowClick = async () => {
     setIsLoading(true);
     if (isFollowed) {
-      axios
+      await axios
         .delete(
-          `https://localhost:7127/api/users/${authContext.user.id}/following/${userData.id}`
+          `https://localhost:7127/api/users/${authContext.user.id}/following-users/${userData.id}`,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `bearer ${authContext.token}`,
+            },
+          }
         )
+        .then((response) => setIsFollowed(false))
         .catch((error) => {
           if (error.response) {
             alert(error.response.data.error);
@@ -43,12 +51,20 @@ const InformationSection = ({ userData }) => {
             alert("Error: ", error.message);
           }
         });
-      setIsFollowed(false);
     } else {
-      axios
+      await axios
         .post(
-          `https://localhost:7127/api/users/${authContext.user.id}/following/${userData.id}`
+          `https://localhost:7127/api/users/${authContext.user.id}/following-users/${userData.id}`,
+          {},
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `bearer ${authContext.token}`,
+            },
+          }
         )
+        .then((response) => setIsFollowed(true))
         .catch((error) => {
           if (error.response) {
             alert(error.response.data.error);
@@ -56,7 +72,6 @@ const InformationSection = ({ userData }) => {
             alert("Error: ", error.message);
           }
         });
-      setIsFollowed(true);
     }
     setIsLoading(false);
   };

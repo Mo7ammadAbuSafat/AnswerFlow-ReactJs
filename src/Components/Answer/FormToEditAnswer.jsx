@@ -31,6 +31,7 @@ const FormToEditAnswer = ({ answerData, handleClose }) => {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
+              Authorization: `Bearer ${authContext.token}`,
             },
           }
         )

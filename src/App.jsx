@@ -17,6 +17,8 @@ import QuestionsPage from "./Pages/QuestionsPage/QuestionsPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import TagsPage from "./Pages/TagsPage/TagsPage";
 import DashboardPage from "./Pages/DashboardPage/DashboardPage";
+import SavedQuestionsPage from "./Pages/SavedQuestionsPage/SavedQuestionsPage";
+import SearchPage from "./Pages/SearchPage/SearchPage";
 
 function App() {
   return (
@@ -25,12 +27,12 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route index element={<WelcomePage />} />
-          <Route path="signUpPage" element={<SignUpPage />} />
-          <Route path="signInPage" element={<SignInPage />} />
-          <Route path="verifyEmailPage/:userId" element={<VerifyEmailPage />} />
-          <Route path="resetPasswordPage1" element={<ResetPasswordPage1 />} />
+          <Route path="sign-up" element={<SignUpPage />} />
+          <Route path="sign-in" element={<SignInPage />} />
+          <Route path="verify-email/:email" element={<VerifyEmailPage />} />
+          <Route path="reset-password-code" element={<ResetPasswordPage1 />} />
           <Route
-            path="resetPasswordPage2/:userId"
+            path="reset-password/:email"
             element={<ResetPasswordPage2 />}
           />
           <Route
@@ -41,14 +43,23 @@ function App() {
               </ProtectedPage>
             }
           />
-          <Route path="ProfilePage/:userId" element={<ProfilePage />} />
-          <Route path="aboutUsPage" element={<AboutUsPage />} />
-          <Route path="feedPage" element={<FeedPage />} />
-          <Route path="QuestionsPage" element={<QuestionsPage />} />
-          <Route path="questionsPage/:questionId" element={<QuestionPage />} />
-          <Route path="TagsPage" element={<TagsPage />} />
           <Route
-            path="DashboardPage"
+            path="users/saved-questions"
+            element={
+              <ProtectedPage>
+                <SavedQuestionsPage />
+              </ProtectedPage>
+            }
+          />
+          <Route path="profile/:userId" element={<ProfilePage />} />
+          <Route path="about" element={<AboutUsPage />} />
+          <Route path="feed" element={<FeedPage />} />
+          <Route path="questions" element={<QuestionsPage />} />
+          <Route path="questions/:questionId" element={<QuestionPage />} />
+          <Route path="search" element={<SearchPage />} />
+          <Route path="tags" element={<TagsPage />} />
+          <Route
+            path="dashboard"
             element={
               <ProtectedPage isForAdmin={true}>
                 <DashboardPage />

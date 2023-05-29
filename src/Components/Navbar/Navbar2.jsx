@@ -16,7 +16,7 @@ function Navbar2({ selectedLabel }) {
   };
 
   // this for menu:
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -77,7 +77,7 @@ function Navbar2({ selectedLabel }) {
             >
               <MenuItem
                 onClick={() => {
-                  navigate("/ProfilePage");
+                  navigate(`/profile/${authContext.user.id}`);
                   handleClose();
                 }}
               >
@@ -93,7 +93,7 @@ function Navbar2({ selectedLabel }) {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  navigate("/signInPage");
+                  navigate("/sign-in");
                   authContext.logout();
                 }}
               >
@@ -112,7 +112,7 @@ function Navbar2({ selectedLabel }) {
             }}
             variant="outlined"
             size="medium"
-            onClick={() => navigate("/signInPage")}
+            onClick={() => navigate("/sign-in")}
           >
             Sign In
           </Button>

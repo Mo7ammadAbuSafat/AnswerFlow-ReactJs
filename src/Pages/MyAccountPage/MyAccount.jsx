@@ -23,10 +23,10 @@ const MyAccount = () => {
             <Tab label="security" value="2" />
           </TabList>
         </Box>
-        <TabPanel value="1" sx={{ width: "100%" }}>
+        <TabPanel value="1" sx={{ width: "100%", marginTop: "35px" }}>
           <BasicSection />
         </TabPanel>
-        <TabPanel value="2" sx={{ width: "100%" }}>
+        <TabPanel value="2" sx={{ width: "100%", marginTop: "35px" }}>
           <SecuritySection />
         </TabPanel>
       </TabContext>

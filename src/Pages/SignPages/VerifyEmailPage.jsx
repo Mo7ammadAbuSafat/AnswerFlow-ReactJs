@@ -1,15 +1,16 @@
-import { Button, CircularProgress, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AlertContext from "../../Components/Store/AlertProvider";
 import AuthContext from "../../Components/Store/AuthProvider";
-import SignContainer from "./SignContainer";
+import SignContainer from "../../Components/Sign/SignContainer";
+import ResendCodePart from "../../Components/Sign/ResendCodePart";
+import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
+import MyTextField from "../../Components/Inputs/MyTextField";
 
 const VerifyEmailPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoading2, setIsLoading2] = useState(false);
 
   const alertStates = useContext(AlertContext);
   const authContext = useContext(AuthContext);
@@ -25,35 +26,15 @@ const VerifyEmailPage = () => {
     } else setValidationError(" ");
   };
 
-  const { userId } = useParams();
-
-  const resendCode = async () => {
-    setIsLoading2(true);
-    await axios
-      .post(
-        `https://localhost:7127/api/users/${userId}/verification-email-code`,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        alertStates.handleOpenSuccessAlert();
-      })
-      .catch((error) => {
-        alert("Error: ", error.message);
-      });
-    setIsLoading2(false);
-  };
+  const { email } = useParams();
 
   const onSubmit = async (e) => {
     if (code !== "") {
       setIsLoading(true);
       await axios
         .post(
-          `https://localhost:7127/api/users/${userId}/verifying-email?code=${code}`,
+          `https://localhost:7127/api/verifying-email`,
+          JSON.stringify({ email: email, code: code }),
           {
             headers: {
               Accept: "application/json",
@@ -69,8 +50,8 @@ const VerifyEmailPage = () => {
         .catch((error) => {
           if (error.response) {
             var errorMessage = error.response.data.error;
-            if (errorMessage === "Invalid code") {
-              setValidationError("invalid code");
+            if (errorMessage === "invalid code") {
+              setValidationError(errorMessage);
             } else {
               alert("Error: ", error.message);
             }
@@ -87,50 +68,22 @@ const VerifyEmailPage = () => {
       <p style={{ color: "#656464" }}>
         Enter the code that we sent to your email
       </p>
-      <TextField
-        sx={{ width: "100%", margin: "10px 0 10px 0" }}
+      <MyTextField
         label="The Code"
-        id="outlined"
+        name="code"
         onChange={onChange}
         value={code}
-        helperText={validationError}
-        error={validationError !== " "}
+        validation={validationError}
       />
-      <Button
-        sx={{
-          width: "101px",
-          height: "42px",
-          textTransform: "none",
-          background: "#4489f8",
-          margin: "10px 0",
-        }}
-        variant="contained"
-        size="large"
+      <ButtonWithLoading
         onClick={onSubmit}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <CircularProgress
-            color="inherit"
-            size={16}
-            sx={{ marginRight: "5px" }}
-          />
-        ) : (
-          "Verify"
-        )}
-      </Button>
-      <p>
-        You did't receive the code?{" "}
-        <span
-          style={{
-            pointerEvents: isLoading2 ? "none" : "initial",
-            color: isLoading2 ? "#757575" : "",
-          }}
-          onClick={() => resendCode()}
-        >
-          Resend
-        </span>
-      </p>
+        isLoading={isLoading}
+        label={"Verify"}
+      />
+      <ResendCodePart
+        email={email}
+        url={"https://localhost:7127/api/verification-email-code"}
+      />
     </SignContainer>
   );
 };

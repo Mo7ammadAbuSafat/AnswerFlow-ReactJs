@@ -13,8 +13,9 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import axios from "axios";
-import AlertContext from "../Store/AlertProvider";
-import AuthContext from "../Store/AuthProvider";
+import AlertContext from "../../Store/AlertProvider";
+import AuthContext from "../../Store/AuthProvider";
+import SimilarQuestions from "./SimilarQuestions";
 
 const steps = ["Write title and body", "Add tags", "Similar questions"];
 
@@ -115,6 +116,7 @@ const FormStepperToPostQuestion = ({ onClose }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          Authorization: `Bearer ${authContext.token}`,
         },
       })
       .then((response) => {
@@ -238,11 +240,11 @@ const FormStepperToPostQuestion = ({ onClose }) => {
             ))}
           </Stack>
         </Stack>
-        <Stack display={activeStep !== 2 ? "none" : "flex"} height={"280px"}>
-          <h1 style={{ margin: "35px 20px", color: "silver" }}>
-            there is no questions similar
-          </h1>
-        </Stack>
+        {activeStep !== 2 && (
+          <Stack display={activeStep !== 2 ? "none" : "flex"} height={"280px"}>
+            <SimilarQuestions questionData={inputs} />
+          </Stack>
+        )}
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
           <Button
             color="inherit"

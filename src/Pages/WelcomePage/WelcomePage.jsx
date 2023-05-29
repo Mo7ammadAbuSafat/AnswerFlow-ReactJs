@@ -11,7 +11,7 @@ const WelcomePage = (props) => {
   const authContext = useContext(AuthContext);
   const handleLogoutClick = () => {
     authContext.logout();
-    navigate("/signInPage");
+    navigate("/sign-in");
   };
 
   return (
@@ -45,7 +45,7 @@ const WelcomePage = (props) => {
                 }}
                 variant="outlined"
                 size="medium"
-                onClick={() => navigate("/signUpPage")}
+                onClick={() => navigate("/sign-up")}
               >
                 Sign Up
               </Button>
@@ -59,7 +59,7 @@ const WelcomePage = (props) => {
                 }}
                 variant="outlined"
                 size="medium"
-                onClick={() => navigate("/signInPage")}
+                onClick={() => navigate("/sign-in")}
               >
                 Sign In
               </Button>
@@ -84,7 +84,7 @@ const WelcomePage = (props) => {
                 marginRight: "50px",
                 textTransform: "none",
               }}
-              onClick={() => navigate("/feedPage")}
+              onClick={() => navigate("/feed")}
               variant="contained"
               size="large"
             >
@@ -92,7 +92,7 @@ const WelcomePage = (props) => {
             </Button>
             <Button
               sx={{ width: "140px", textTransform: "none" }}
-              onClick={() => navigate("/aboutUsPage")}
+              onClick={() => navigate("/about")}
               variant="outlined"
               size="large"
             >
