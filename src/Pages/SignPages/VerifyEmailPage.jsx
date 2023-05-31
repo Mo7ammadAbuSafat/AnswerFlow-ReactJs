@@ -45,7 +45,7 @@ const VerifyEmailPage = () => {
         .then((response) => {
           authContext.login(response.data);
           alertStates.handleOpenSuccessAlert();
-          navigate("/feedPage");
+          navigate("/feed");
         })
         .catch((error) => {
           if (error.response) {

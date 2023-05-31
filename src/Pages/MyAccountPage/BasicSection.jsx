@@ -29,10 +29,9 @@ const BasicSection = () => {
 
   const validateInputs = () => {
     setValidation({
-      about: inputs.about !== "",
       username: inputs.username !== "",
     });
-    return inputs.username !== "" && inputs.about !== "";
+    return inputs.username !== "";
   };
 
   const onChange = (e) => {
@@ -118,7 +117,6 @@ const BasicSection = () => {
         name="about"
         onChange={onChange}
         value={inputs.about}
-        error={!validation.about}
         multiline
         rows={5}
       />

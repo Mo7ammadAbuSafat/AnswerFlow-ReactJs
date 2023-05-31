@@ -8,7 +8,11 @@ import AnswerVote from "./AnswerVote";
 import AnswerContent from "./AnswerContent";
 import AnswerOptions from "./AnswerOptions";
 
-const Answer = ({ answerData, showFullBody = true }) => {
+const Answer = ({
+  answerData,
+  showFullBody = true,
+  lastEditDateForQuestion = null,
+}) => {
   return (
     <Card sx={{ margin: "25px 0" }}>
       <CardHeader
@@ -33,7 +37,11 @@ const Answer = ({ answerData, showFullBody = true }) => {
       <CardContent sx={{ padding: 0, marginTop: 1 }}>
         <Stack direction={"row"} justifyContent={"left"}>
           <AnswerVote answerData={answerData} />
-          <AnswerContent answerData={answerData} showFullBody={showFullBody} />
+          <AnswerContent
+            answerData={answerData}
+            showFullBody={showFullBody}
+            lastEditDateForQuestion={lastEditDateForQuestion}
+          />
         </Stack>
       </CardContent>
     </Card>

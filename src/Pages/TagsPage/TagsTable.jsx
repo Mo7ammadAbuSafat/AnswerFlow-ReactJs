@@ -8,7 +8,7 @@ import AuthContext from "../../Components/Store/AuthProvider";
 import TagRow from "./TagRow";
 import { Box, Checkbox, FormControlLabel, TextField } from "@mui/material";
 
-const TagsTable = () => {
+const TagsTable = ({ trigger }) => {
   const authContext = useContext(AuthContext);
 
   const [tags, setTags] = useState([]);
@@ -19,7 +19,7 @@ const TagsTable = () => {
       });
     };
     fetchData();
-  }, []);
+  }, [trigger]);
 
   const [followedTags, setFollowedTags] = useState([]);
   useEffect(() => {

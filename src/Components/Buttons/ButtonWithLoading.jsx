@@ -5,7 +5,6 @@ const ButtonWithLoading = ({ isLoading, onClick, label }) => {
   return (
     <Button
       sx={{
-        // width: "101px",
         height: "42px",
         textTransform: "none",
         background: "#4489f8",

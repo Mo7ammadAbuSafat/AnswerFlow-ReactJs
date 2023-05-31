@@ -4,7 +4,7 @@ import AuthContext from "../Store/AuthProvider";
 import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import axios from "axios";
 
-const FormToAddAnswer = ({ questionId, handleClose }) => {
+const FormToAddAnswer = ({ questionId, handleClose, handleTrigger }) => {
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
   const authContext = useContext(AuthContext);
@@ -37,11 +37,12 @@ const FormToAddAnswer = ({ questionId, handleClose }) => {
         )
         .then((response) => {
           alertStates.handleOpenSuccessAlert();
+          handleTrigger();
           handleClose();
         })
         .catch((error) => {
           if (error.response) {
-            alert(error.response.data.error);
+            alertStates.handleOpenErrorAlert(error.response.data.error);
           } else {
             alert("Error: ", error.message);
           }

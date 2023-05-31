@@ -6,10 +6,11 @@ import Question from "./Question";
 import Styles from "../Styling.module.css";
 import PopUpWithButton from "../Popup/PopUpWithButton";
 import FormToAddAnswer from "../Answer/FormToAddAnswer";
-import Answer from "../Answer/Answer";
 import Answers from "../Answer/Answers";
 
 const FullQuestion = ({ questionId }) => {
+  const [trigger, setTrigger] = useState(false);
+  const handleTrigger = () => setTrigger(!trigger);
   const [openPopup, setOpenPopup] = useState(false);
   const handleOpenPopup = () => {
     setOpenPopup(true);
@@ -33,7 +34,7 @@ const FullQuestion = ({ questionId }) => {
           }
         }
       });
-  }, [questionId, navigate]);
+  }, [questionId, navigate, trigger]);
 
   if (questionData === null) {
     return <Box flex={4}>Loading...</Box>;
@@ -50,7 +51,7 @@ const FullQuestion = ({ questionId }) => {
       >
         <Grid item xs={4}>
           <h2 className={Styles.answer}>
-            {questionData.answers.length === 0 ? "No Answers Yet" : "Answers: "}
+            {questionData.answersCount === 0 ? "No Answers Yet" : "Answers: "}
           </h2>
         </Grid>
         <Grid item xs={2}>
@@ -63,11 +64,15 @@ const FullQuestion = ({ questionId }) => {
             <FormToAddAnswer
               questionId={questionData.id}
               handleClose={handleClosePopup}
+              handleTrigger={handleTrigger}
             />
           </PopUpWithButton>
         </Grid>
       </Grid>
-      <Answers questionId={questionData.id} />
+      <Answers
+        questionId={questionData.id}
+        lastEditDateForQuestion={questionData.lastEditDate}
+      />
     </Box>
   );
 };

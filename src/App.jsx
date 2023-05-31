@@ -19,6 +19,7 @@ import TagsPage from "./Pages/TagsPage/TagsPage";
 import DashboardPage from "./Pages/DashboardPage/DashboardPage";
 import SavedQuestionsPage from "./Pages/SavedQuestionsPage/SavedQuestionsPage";
 import SearchPage from "./Pages/SearchPage/SearchPage";
+import ErrorAlert from "./Components/General/ErrorAlert";
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <SuccessAlert />
+      <ErrorAlert />
     </>
   );
 }

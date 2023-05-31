@@ -132,7 +132,7 @@ const InformationSection = ({ userData }) => {
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <img
-          style={{ borderRadius: "50%" }}
+          style={{ borderRadius: "50%", objectFit: "contain" }}
           width={"80%"}
           alt=""
           src={

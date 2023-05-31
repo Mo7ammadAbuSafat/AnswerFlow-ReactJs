@@ -3,7 +3,7 @@ import Answer from "./Answer";
 import { Divider } from "@mui/material";
 import axios from "axios";
 
-const Answers = ({ questionId }) => {
+const Answers = ({ questionId, lastEditDateForQuestion = null }) => {
   const [answers, setAnswers] = useState([]);
   useEffect(() => {
     axios
@@ -21,7 +21,10 @@ const Answers = ({ questionId }) => {
     return (
       <>
         <Divider />
-        <Answer answerData={answer} />
+        <Answer
+          answerData={answer}
+          lastEditDateForQuestion={lastEditDateForQuestion}
+        />
       </>
     );
   });
