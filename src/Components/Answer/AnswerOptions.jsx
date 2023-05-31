@@ -55,7 +55,7 @@ const AnswerOptions = ({ answerData }) => {
         })
         .catch((error) => {
           if (error.response) {
-            alert(error.response.data.error);
+            alertStates.handleOpenErrorAlert(error.response.data.error);
           } else {
             alert("Error: ", error.message);
           }

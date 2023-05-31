@@ -1,8 +1,12 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import React from "react";
 import Styles from "../Styling.module.css";
 
-const AnswerContent = ({ answerData, showFullBody }) => {
+const AnswerContent = ({
+  answerData,
+  showFullBody,
+  lastEditDateForQuestion,
+}) => {
   return (
     <Stack
       spacing={1.5}
@@ -16,6 +20,12 @@ const AnswerContent = ({ answerData, showFullBody }) => {
       >
         {answerData.body}
       </p>
+      {lastEditDateForQuestion !== null &&
+        lastEditDateForQuestion > answerData.creationDate && (
+          <Typography variant="caption" display="block" sx={{ margin: "0" }}>
+            *answered before editing question
+          </Typography>
+        )}
     </Stack>
   );
 };

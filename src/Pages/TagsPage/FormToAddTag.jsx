@@ -4,7 +4,7 @@ import axios from "axios";
 import AlertContext from "../../Components/Store/AlertProvider";
 import AuthContext from "../../Components/Store/AuthProvider";
 
-const FormToAddTag = ({ handleClose }) => {
+const FormToAddTag = ({ handleClose, handleTrigger }) => {
   const authContext = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
@@ -43,6 +43,7 @@ const FormToAddTag = ({ handleClose }) => {
         })
         .then((response) => {
           alertStates.handleOpenSuccessAlert();
+          handleTrigger();
           handleClose();
         })
         .catch((error) => {
@@ -50,7 +51,10 @@ const FormToAddTag = ({ handleClose }) => {
             if (error.response.data.error === "tag already exist") {
               setNameValidation(false);
               setNameValidationMassage("tag already exist");
-            } else alert(error.response.data.error);
+            } else {
+              console.log(error);
+              alert(error.response.data.error);
+            }
           } else {
             alert("Error: ", error.message);
           }

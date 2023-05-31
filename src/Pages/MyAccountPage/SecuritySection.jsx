@@ -99,7 +99,7 @@ const SecuritySection = () => {
         .catch((error) => {
           if (error.response) {
             var errorMessage = error.response.data.error;
-            if (errorMessage === "Password is not correct") {
+            if (errorMessage === "password is not correct") {
               setValidationErrors({
                 ...validationErrors,
                 oldPassword: "incorrect password",
@@ -108,7 +108,7 @@ const SecuritySection = () => {
               alert("Error: ", errorMessage);
             }
           } else {
-            alert("Error: ", error.message);
+            alert("Error:1 ", error.message);
           }
         });
     }

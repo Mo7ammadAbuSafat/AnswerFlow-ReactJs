@@ -5,6 +5,8 @@ import FormToAddTag from "./FormToAddTag";
 import TagsTable from "./TagsTable";
 
 const Tags = () => {
+  const [trigger, setTrigger] = useState(false);
+  const handleTrigger = () => setTrigger(!trigger);
   const [openPopup, setOpenPopup] = useState(false);
   const handleOpenPopup = () => {
     setOpenPopup(true);
@@ -34,11 +36,14 @@ const Tags = () => {
             handleOpen={handleOpenPopup}
             handleClose={handleClosePopup}
           >
-            <FormToAddTag handleClose={handleClosePopup} />
+            <FormToAddTag
+              handleClose={handleClosePopup}
+              handleTrigger={handleTrigger}
+            />
           </PopUpWithButton>
         </Grid>
       </Grid>
-      <TagsTable />
+      <TagsTable trigger={trigger} />
     </Box>
   );
 };

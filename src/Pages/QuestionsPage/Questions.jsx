@@ -7,6 +7,8 @@ import axios from "axios";
 import Filter from "./Filter";
 
 const Questions = () => {
+  const [trigger, setTrigger] = useState(false);
+  const handleTrigger = () => setTrigger(!trigger);
   const [apiParams, setApiParams] = useState({
     pageNumber: 1,
     pageSize: 10,
@@ -46,7 +48,7 @@ const Questions = () => {
         });
     };
     fetchData();
-  }, [apiParams]);
+  }, [apiParams, trigger]);
 
   if (data === null) {
     return <Box flex={4}>Loading...</Box>;
@@ -72,7 +74,10 @@ const Questions = () => {
             handleOpen={handleOpenPopup}
             handleClose={handleClosePopup}
           >
-            <FormStepperToPostQuestion onClose={handleClosePopup} />
+            <FormStepperToPostQuestion
+              onClose={handleClosePopup}
+              handleTrigger={handleTrigger}
+            />
           </PopUpWithButton>
         </Grid>
       </Grid>

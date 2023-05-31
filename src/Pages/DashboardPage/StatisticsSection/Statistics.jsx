@@ -8,6 +8,7 @@ import AuthContext from "../../../Components/Store/AuthProvider";
 import { Box, Grid } from "@mui/material";
 import StatBox from "./StatBox";
 import StatisticCard from "./StatisticCard";
+import StatisticsLine from "./StatisticsLine";
 
 const Statistics = () => {
   const authContext = useContext(AuthContext);
@@ -147,6 +148,13 @@ const Statistics = () => {
             }
             icon={<ReportIcon sx={{ color: "white", fontSize: "25px" }} />}
           />
+        </StatisticCard>
+      </Grid>
+      <Grid item xs={12}>
+        <StatisticCard>
+          <Box width={"100%"} margin={"auto"}>
+            <StatisticsLine />
+          </Box>
         </StatisticCard>
       </Grid>
     </Grid>
