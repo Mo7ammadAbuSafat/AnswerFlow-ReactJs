@@ -7,6 +7,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import Box from "@mui/material/Box";
 import BasicSection from "./BasicSection";
 import SecuritySection from "./SecuritySection";
+import ProfilePhotoSection from "./ProfilePhotoSection";
 
 const MyAccount = () => {
   const [tabValue, setTabValue] = useState("1");
@@ -21,6 +22,7 @@ const MyAccount = () => {
           <TabList onChange={handleTabChange} aria-label="lab API tabs example">
             <Tab label="Basic" value="1" />
             <Tab label="security" value="2" />
+            <Tab label="profile photo" value="3" />
           </TabList>
         </Box>
         <TabPanel value="1" sx={{ width: "100%", marginTop: "35px" }}>
@@ -28,6 +30,9 @@ const MyAccount = () => {
         </TabPanel>
         <TabPanel value="2" sx={{ width: "100%", marginTop: "35px" }}>
           <SecuritySection />
+        </TabPanel>
+        <TabPanel value="3" sx={{ width: "100%", marginTop: "35px" }}>
+          <ProfilePhotoSection />
         </TabPanel>
       </TabContext>
     </Stack>

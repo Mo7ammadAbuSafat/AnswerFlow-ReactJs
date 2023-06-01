@@ -123,17 +123,26 @@ const InformationSection = ({ userData }) => {
   const handleCloseOpenFollowerUsersPopup = () => {
     setOpenFollowerUsersPopup(false);
   };
+
+  const openLinkInNewTab = (url) => {
+    window.open(url, "_blank");
+  };
   return (
     <Grid container spacing={2} width={"100%"} marginTop={0.5}>
       <Grid
         item
         xs={12}
-        sm={4}
+        md={4}
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <img
-          style={{ borderRadius: "50%", objectFit: "contain" }}
-          width={"80%"}
+          onClick={() => openLinkInNewTab(userData.image.imagePath)}
+          disabled={
+            userData.image === null || userData.image.imagePath === null
+          }
+          style={{ borderRadius: "50%", objectFit: "cover" }}
+          width={"250px"}
+          height={"250px"}
           alt=""
           src={
             userData.image !== null && userData.image.imagePath !== null
