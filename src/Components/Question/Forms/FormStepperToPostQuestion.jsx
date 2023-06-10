@@ -16,13 +16,22 @@ import axios from "axios";
 import AlertContext from "../../Store/AlertProvider";
 import AuthContext from "../../Store/AuthProvider";
 
-const steps = ["Write title and body", "Add tags", "Similar questions"];
+const steps = [
+  "Write title and body",
+  "Add tags",
+  "Add photo",
+  "Similar questions",
+];
 
 const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const alertStates = useContext(AlertContext);
   const authContext = useContext(AuthContext);
+  const [file, setFile] = useState(null);
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
 
   const [inputs, setInputs] = useState({
     title: "",
@@ -105,16 +114,17 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
 
   const handlePostClick = async () => {
     setIsLoading(true);
-    const data = {
-      userId: authContext.user.id,
-      ...inputs,
-      tagsNames: selectedTags,
-    };
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("tagsNames", selectedTags);
+    formData.append("title", inputs.title);
+    formData.append("body", inputs.body);
+
     await axios
-      .post("https://localhost:7127/api/questions", JSON.stringify(data), {
+      .post("https://localhost:7127/api/questions", formData, {
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${authContext.token}`,
         },
       })
@@ -171,7 +181,12 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
         <Stack display={activeStep !== 1 ? "none" : "flex"}>
           <Autocomplete
             PaperComponent={({ children }) => (
-              <Paper style={{ maxHeight: 200, overflowY: "auto" }}>
+              <Paper
+                sx={{
+                  maxHeight: "200px !important",
+                  overflowY: "scroll",
+                }}
+              >
                 {children}
               </Paper>
             )}
@@ -241,6 +256,13 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
           </Stack>
         </Stack>
         <Stack display={activeStep !== 2 ? "none" : "flex"} height={"280px"}>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            style={{ padding: "50px" }}
+          />
+        </Stack>
+        <Stack display={activeStep !== 3 ? "none" : "flex"} height={"280px"}>
           <h1 style={{ margin: "35px 20px", color: "silver" }}>
             there is no questions similar
           </h1>

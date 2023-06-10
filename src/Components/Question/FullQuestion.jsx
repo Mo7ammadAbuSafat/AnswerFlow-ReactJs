@@ -29,7 +29,7 @@ const FullQuestion = ({ questionId }) => {
       .catch((error) => {
         if (error.response) {
           var errorMessage = error.response.data.error;
-          if (errorMessage === "No question with this id") {
+          if (errorMessage === "no question with this id") {
             navigate(`/*`);
           }
         }

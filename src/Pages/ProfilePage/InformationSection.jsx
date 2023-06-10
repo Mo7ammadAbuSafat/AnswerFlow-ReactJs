@@ -141,8 +141,8 @@ const InformationSection = ({ userData }) => {
             userData.image === null || userData.image.imagePath === null
           }
           style={{ borderRadius: "50%", objectFit: "cover" }}
-          width={"250px"}
-          height={"250px"}
+          width={"220px"}
+          height={"220px"}
           alt=""
           src={
             userData.image !== null && userData.image.imagePath !== null
