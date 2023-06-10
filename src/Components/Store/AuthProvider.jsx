@@ -6,6 +6,7 @@ const AuthContext = createContext({
   token: null,
   user: null,
   isLoggedIn: false,
+  refreshUser: () => {},
   login: () => {},
   logout: () => {},
 });
@@ -14,7 +15,10 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("authUser")) || null
   );
   const [token, setToken] = useState(localStorage.getItem("authToken") || null);
-
+  const [trigger, setTrigger] = useState(false);
+  const refreshUser = () => {
+    setTrigger(!trigger);
+  };
   const userIsLoggedIn = user !== null;
 
   const loginHandler = (token) => {
@@ -56,11 +60,12 @@ export const AuthContextProvider = ({ children }) => {
       setUser(null);
       localStorage.removeItem("authUser");
     }
-  }, [token]);
+  }, [token, trigger]);
   const valueContext = {
     token: token,
     user: user,
     isLoggedIn: userIsLoggedIn,
+    refreshUser: refreshUser,
     login: loginHandler,
     logout: logoutHandler,
   };

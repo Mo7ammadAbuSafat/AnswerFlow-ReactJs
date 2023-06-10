@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import AlertContext from "../../Components/Store/AlertProvider";
 import axios from "axios";
 import AuthContext from "../../Components/Store/AuthProvider";
-import MyTextField from "../../Components/Inputs/MyTextField";
 import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
 
 const BasicSection = () => {

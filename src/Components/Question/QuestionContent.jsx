@@ -26,6 +26,14 @@ const QuestionContent = ({ questionData, showFullBody = true }) => {
       <p className={showFullBody ? Styles.body2 : Styles.body1}>
         {questionData.body}
       </p>
+      {questionData.image && showFullBody && (
+        <img
+          alt=""
+          src={questionData.image.imagePath}
+          onClick={() => openLinkInNewTab(questionData.image.imagePath)}
+          style={{ width: "100%", objectFit: "contain", maxHeight: "300px" }}
+        />
+      )}
       <Stack direction={"row"} spacing={1} marginTop={10}>
         {questionData.tags.map((tag) => {
           return (
