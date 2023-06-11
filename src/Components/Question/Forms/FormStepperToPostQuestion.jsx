@@ -15,6 +15,9 @@ import { Stack } from "@mui/system";
 import axios from "axios";
 import AlertContext from "../../Store/AlertProvider";
 import AuthContext from "../../Store/AuthProvider";
+import TitleAndBodySection from "./FormSections/TitleAndBodySection";
+import TagsSection from "./FormSections/TagsSection";
+import SimilarQuestionsSection from "./FormSections/SimilarQuestionsSection";
 
 const steps = [
   "Write title and body",
@@ -39,6 +42,7 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
   });
 
   const [selectedTags, setSelectedTags] = useState([]);
+  const [selectValueError, setSelectValueError] = useState(false);
 
   const [validation, setValidation] = useState({
     title: true,
@@ -63,19 +67,6 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
     return inputs.title !== "" && inputs.body !== "";
   };
 
-  const [tags, setTags] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios.get("https://localhost:7127/api/tags").then((response) => {
-        setTags(response.data);
-      });
-    };
-    fetchData();
-  }, []);
-  const options = tags.map((tag) => tag.name);
-  const [selectValue, setSelectValue] = useState("");
-  const [selectValueError, setSelectValueError] = useState(false);
-
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -95,21 +86,6 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
         [name]: false,
       });
     }
-  };
-
-  const handleAddClick = () => {
-    if (selectValue !== "" && !selectedTags.includes(selectValue)) {
-      var arr = [...selectedTags];
-      arr.push(selectValue);
-      setSelectedTags(arr);
-    } else {
-      setSelectValueError(true);
-    }
-  };
-
-  const handleDelete = (tag) => {
-    const tags = selectedTags.filter((x) => x !== tag);
-    setSelectedTags(tags);
   };
 
   const handlePostClick = async () => {
@@ -156,117 +132,35 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
         })}
       </Stepper>
       <React.Fragment>
-        <Stack display={activeStep !== 0 ? "none" : "flex"}>
-          <TextField
-            sx={{ width: "calc(100% - 40px)", margin: "40px 20px 0 20px" }}
-            label="Title"
-            id="outlined"
-            name="title"
+        {activeStep === 0 && (
+          <TitleAndBodySection
+            inputs={inputs}
+            validation={validation}
             onChange={onChange}
-            value={inputs.title}
-            error={!validation.title}
           />
-          <TextField
-            sx={{ width: "calc(100% - 40px)", margin: "30px 20px" }}
-            id="outlined-multiline-static"
-            label="Body"
-            name="body"
-            onChange={onChange}
-            value={inputs.body}
-            error={!validation.body}
-            multiline
-            rows={4}
-          />
-        </Stack>
+        )}
         <Stack display={activeStep !== 1 ? "none" : "flex"}>
-          <Autocomplete
-            PaperComponent={({ children }) => (
-              <Paper
-                sx={{
-                  maxHeight: "200px !important",
-                  overflowY: "scroll",
-                }}
-              >
-                {children}
-              </Paper>
-            )}
-            freeSolo={false}
-            disablePortal
-            id="combo-box-demo"
-            sx={{
-              width: "60%",
-              margin: "40px 20px 0 20px",
-            }}
-            options={options}
-            onChange={(event, newValue) => {
-              setSelectValue(newValue ? newValue : "");
-              setSelectValueError(false);
-            }}
-            onInputChange={(event, newValue) => {
-              setSelectValue(newValue ? newValue : "");
-              setSelectValueError(false);
-            }}
-            getOptionLabel={(option) => option}
-            renderInput={(params) => (
-              <TextField
-                error={selectValueError}
-                {...params}
-                label="Select Tag"
-                variant="outlined"
-                fullWidth
-              />
-            )}
+          <TagsSection
+            selectValueError={selectValueError}
+            setSelectValueError={setSelectValueError}
+            setSelectedTags={setSelectedTags}
+            selectedTags={selectedTags}
           />
-          <Button
-            sx={{
-              textTransform: "none",
-              background: "#4489f8",
-              margin: "20px",
-              width: "80px",
-            }}
-            variant="contained"
-            size="md"
-            onClick={handleAddClick}
-          >
-            Add
-          </Button>
-          <Stack
-            direction={"row"}
-            flexWrap={"wrap"}
-            spacing={1}
-            sx={{
-              width: "calc(100% - 40px)",
-              height: "100px",
-              margin: "0px 20px 10px 20px",
-              padding: "10px",
-              border: "0.5px solid silver",
-              borderRadius: "5px",
-            }}
-          >
-            {selectedTags.map((tag) => (
-              <Chip
-                key={Date().now}
-                size="small"
-                label={tag}
-                onDelete={() => {
-                  handleDelete(tag);
-                }}
-              />
-            ))}
+        </Stack>
+        {activeStep === 2 && (
+          <Stack height={"280px"}>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              style={{ padding: "50px" }}
+            />
           </Stack>
-        </Stack>
-        <Stack display={activeStep !== 2 ? "none" : "flex"} height={"280px"}>
-          <input
-            type="file"
-            onChange={handleFileChange}
-            style={{ padding: "50px" }}
-          />
-        </Stack>
-        <Stack display={activeStep !== 3 ? "none" : "flex"} height={"280px"}>
-          <h1 style={{ margin: "35px 20px", color: "silver" }}>
-            there is no questions similar
-          </h1>
-        </Stack>
+        )}
+        {activeStep === 3 && (
+          <Stack height={"280px"}>
+            <SimilarQuestionsSection inputs={inputs} />
+          </Stack>
+        )}
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
           <Button
             color="inherit"
