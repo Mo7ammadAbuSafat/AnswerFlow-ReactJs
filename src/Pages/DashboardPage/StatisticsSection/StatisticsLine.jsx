@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,6 +10,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import AuthContext from "../../../Components/Store/AuthProvider";
+import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -22,36 +24,25 @@ ChartJS.register(
 );
 
 const StatisticsLine = () => {
-  const data = [
-    {
-      month: 1,
-      count: 30,
-    },
-    {
-      month: 2,
-      count: 20,
-    },
-    {
-      month: 3,
-      count: 70,
-    },
-    {
-      month: 4,
-      count: 80,
-    },
-    {
-      month: 5,
-      count: 20,
-    },
-    {
-      month: 6,
-      count: 20,
-    },
-    {
-      month: 7,
-      count: 90,
-    },
-  ];
+  const authContext = useContext(AuthContext);
+  const [questionsStatistics, setQuestionsStatistics] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .get(`https://localhost:7127/api/statistics/questions-per-month`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `bearer ${authContext.token}`,
+          },
+        })
+        .then((response) => {
+          setQuestionsStatistics(response.data);
+        });
+    };
+    fetchData();
+  }, [authContext]);
+
   const options = {
     scales: {
       x: {
@@ -89,26 +80,24 @@ const StatisticsLine = () => {
     },
   };
 
-  const labels = data.map((item) => {
+  const labels = questionsStatistics.map((item) => {
     return item.month;
   });
 
-  const predictdata = {
+  const values = {
     labels,
     datasets: [
       {
         label: "actual",
         borderColor: "rgb(53, 162, 235)",
-        data: data.map((item) => {
-          return item.count;
+        data: questionsStatistics.map((item) => {
+          return item.numOfQuestions;
         }),
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
     ],
   };
-  return (
-    <Line style={{ width: "100%" }} options={options} data={predictdata} />
-  );
+  return <Line style={{ width: "100%" }} options={options} data={values} />;
 };
 
 export default StatisticsLine;
