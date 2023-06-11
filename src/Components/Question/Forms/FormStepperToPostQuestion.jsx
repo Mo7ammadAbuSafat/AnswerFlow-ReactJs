@@ -1,16 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
-import {
-  Autocomplete,
-  Chip,
-  CircularProgress,
-  Paper,
-  TextField,
-} from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { Stack } from "@mui/system";
 import axios from "axios";
 import AlertContext from "../../Store/AlertProvider";
@@ -18,6 +9,7 @@ import AuthContext from "../../Store/AuthProvider";
 import TitleAndBodySection from "./FormSections/TitleAndBodySection";
 import TagsSection from "./FormSections/TagsSection";
 import SimilarQuestionsSection from "./FormSections/SimilarQuestionsSection";
+import CustomStepper from "./FormSections/CustomStepper";
 
 const steps = [
   "Write title and body",
@@ -120,17 +112,7 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
 
   return (
     <Box sx={{ width: "100%", height: "370px", paddingTop: "20px" }}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label) => {
-          const stepProps = {};
-          const labelProps = {};
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
+      <CustomStepper activeStep={activeStep} steps={steps} />
       <React.Fragment>
         {activeStep === 0 && (
           <TitleAndBodySection
