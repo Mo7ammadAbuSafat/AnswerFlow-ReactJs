@@ -12,7 +12,8 @@ const SimilarQuestionsSection = ({ inputs }) => {
           params: {
             pageNumber: 1,
             pageSize: 10,
-            searchText: inputs.title + " " + inputs.body,
+            searchText:
+              inputs.title + " " + inputs.body.replace(/<[^>]+>/g, " "),
           },
           headers: {
             Accept: "application/json",

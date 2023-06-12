@@ -45,7 +45,7 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
     if (activeStep === 0 && !validateInputs1()) {
       setValidation({
         title: inputs.title !== "",
-        body: inputs.body !== "",
+        body: inputs.body.replace(/<[^>]+>/g, "") !== "",
       });
       return;
     } else if (activeStep === 1 && selectedTags.length === 0) {
@@ -63,21 +63,22 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value });
-    const isValid = value !== "";
-    if (isValid) {
-      setValidation({
-        ...validation,
-        [name]: true,
-      });
-    } else {
-      setValidation({
-        ...validation,
-        [name]: false,
-      });
-    }
+  const onTitleChange = (e) => {
+    setInputs({ ...inputs, title: e.target.value });
+    const isValid = e.target.value !== "";
+    setValidation({
+      ...validation,
+      title: isValid,
+    });
+  };
+
+  const onBodyChange = (value) => {
+    setInputs({ ...inputs, body: value });
+    const isValid = value.replace(/<[^>]+>/g, "") !== "";
+    setValidation({
+      ...validation,
+      body: isValid,
+    });
   };
 
   const handlePostClick = async () => {
@@ -118,17 +119,20 @@ const FormStepperToPostQuestion = ({ onClose, handleTrigger }) => {
           <TitleAndBodySection
             inputs={inputs}
             validation={validation}
-            onChange={onChange}
+            onTitleChange={onTitleChange}
+            onBodyChange={onBodyChange}
           />
         )}
-        <Stack display={activeStep !== 1 ? "none" : "flex"}>
-          <TagsSection
-            selectValueError={selectValueError}
-            setSelectValueError={setSelectValueError}
-            setSelectedTags={setSelectedTags}
-            selectedTags={selectedTags}
-          />
-        </Stack>
+        {activeStep === 1 && (
+          <Stack>
+            <TagsSection
+              selectValueError={selectValueError}
+              setSelectValueError={setSelectValueError}
+              setSelectedTags={setSelectedTags}
+              selectedTags={selectedTags}
+            />
+          </Stack>
+        )}
         {activeStep === 2 && (
           <Stack height={"280px"}>
             <input

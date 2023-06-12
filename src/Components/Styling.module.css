@@ -35,3 +35,11 @@
 .votes:hover, .mouseHaver:hover{
     cursor: pointer;
 }
+
+.htmlText p{
+    margin: 2px 0;
+}
+
+.htmlText h1,.htmlText h2,.htmlText h3{
+    margin: 10px 0;
+}

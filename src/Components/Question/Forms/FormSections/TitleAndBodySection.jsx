@@ -1,7 +1,14 @@
 import { Stack, TextField } from "@mui/material";
 import React from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-const TitleAndBodySection = ({ inputs, validation, onChange }) => {
+const TitleAndBodySection = ({
+  inputs,
+  validation,
+  onTitleChange,
+  onBodyChange,
+}) => {
   return (
     <Stack>
       <TextField
@@ -9,20 +16,19 @@ const TitleAndBodySection = ({ inputs, validation, onChange }) => {
         label="Title"
         id="outlined"
         name="title"
-        onChange={onChange}
+        onChange={onTitleChange}
         value={inputs.title}
         error={!validation.title}
       />
-      <TextField
-        sx={{ width: "calc(100% - 40px)", margin: "30px 20px" }}
-        id="outlined-multiline-static"
-        label="Body"
-        name="body"
-        onChange={onChange}
+      <ReactQuill
         value={inputs.body}
-        error={!validation.body}
-        multiline
-        rows={4}
+        onChange={onBodyChange}
+        style={{
+          width: "calc(100% - 40px)",
+          margin: "30px 20px",
+          height: "120px",
+          marginBottom: "30px",
+        }}
       />
     </Stack>
   );

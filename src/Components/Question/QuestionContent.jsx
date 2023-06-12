@@ -1,7 +1,8 @@
 import React from "react";
-import { Chip, Stack } from "@mui/material";
+import { Box, Chip, Stack } from "@mui/material";
 import Styles from "../Styling.module.css";
 import { useNavigate } from "react-router-dom";
+import StyledHtmlText from "../General/StyledHtmlText";
 
 const QuestionContent = ({ questionData, showFullBody = true }) => {
   const openLinkInNewTab = (url) => {
@@ -23,9 +24,16 @@ const QuestionContent = ({ questionData, showFullBody = true }) => {
       >
         {questionData.title}
       </p>
-      <p className={showFullBody ? Styles.body2 : Styles.body1}>
-        {questionData.body}
-      </p>
+      {!showFullBody ? (
+        <p className={Styles.body1}>
+          {questionData.body.replace(/<[^>]+>/g, " ")}
+        </p>
+      ) : (
+        <Box className={Styles.body2}>
+          <StyledHtmlText text={questionData.body} />
+        </Box>
+      )}
+
       {questionData.image && showFullBody && (
         <img
           alt=""
