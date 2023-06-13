@@ -41,28 +41,18 @@ const NotificationProvider = ({ children }) => {
     }
   }, [pageNumber, trigger]);
 
-  const interval = setInterval(() => {
-    if (authContext.isLoggedIn) {
-      handleTrigger();
-    } else {
-      clearInterval(interval);
-    }
-  }, 10000);
-
   const markAsRead = async () => {
-    await axios
-      .put(
-        `https://localhost:7127/api/users/${authContext.user.id}/notifications`,
-        {},
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `bearer ${authContext.token}`,
-          },
-        }
-      )
-      .catch((error) => console.log(error));
+    await axios.put(
+      `https://localhost:7127/api/users/${authContext.user.id}/notifications`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `bearer ${authContext.token}`,
+        },
+      }
+    );
     handleTrigger();
   };
 

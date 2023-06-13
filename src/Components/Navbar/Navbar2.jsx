@@ -34,9 +34,7 @@ function Navbar2({ selectedLabel }) {
         selectedLabel={selectedLabel}
       />
       <Navbar displayMenu={true} toggleDrawer={toggleDrawer}>
-        <Box
-          sx={{ display: { sm: "none", xs: "none", md: "none", lg: "flex" } }}
-        >
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
           <SearchAppBar />
         </Box>
         {authContext.isLoggedIn ? (
@@ -50,7 +48,7 @@ function Navbar2({ selectedLabel }) {
             >
               <Box
                 sx={{
-                  display: { xs: "none", sm: "flex", md: "flex", lg: "flex" },
+                  display: { xs: "none", md: "flex" },
                   color: "white",
                 }}
               >
