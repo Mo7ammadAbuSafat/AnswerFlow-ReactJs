@@ -20,6 +20,7 @@ import DashboardPage from "./Pages/DashboardPage/DashboardPage";
 import SavedQuestionsPage from "./Pages/SavedQuestionsPage/SavedQuestionsPage";
 import SearchPage from "./Pages/SearchPage/SearchPage";
 import ErrorAlert from "./Components/General/ErrorAlert";
+import NotificationsPage from "./Pages/NotificationPage/NotificationsPage";
 
 function App() {
   return (
@@ -49,6 +50,14 @@ function App() {
             element={
               <ProtectedPage>
                 <SavedQuestionsPage />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="notifications"
+            element={
+              <ProtectedPage>
+                <NotificationsPage />
               </ProtectedPage>
             }
           />
