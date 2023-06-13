@@ -1,4 +1,5 @@
 import {
+  Badge,
   List,
   ListItem,
   ListItemButton,
@@ -18,10 +19,13 @@ import AuthContext from "../Store/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { NotificationContext } from "../Store/NotificationProvider";
 
 const LeftSidebarMenu = ({ selectedLabel }) => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
+  const { numOfNewNotifications } = useContext(NotificationContext);
   const handleClick = (routPath) => {
     if (routPath === "/sign-in") {
       authContext.logout();
@@ -44,6 +48,15 @@ const LeftSidebarMenu = ({ selectedLabel }) => {
     },
   ];
   if (authContext.isLoggedIn) {
+    listData.push({
+      icon: (
+        <Badge badgeContent={numOfNewNotifications} color="error">
+          <NotificationsIcon />
+        </Badge>
+      ),
+      label: "Notifications",
+      routPath: `/notifications`,
+    });
     listData.push({
       icon: <BookmarkIcon />,
       label: "Saved",

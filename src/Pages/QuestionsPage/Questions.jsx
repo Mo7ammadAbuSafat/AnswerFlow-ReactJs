@@ -63,7 +63,7 @@ const Questions = () => {
         height={100}
       >
         <Grid item xs={2.5}>
-          <Typography variant="h3" color="text.secondary" sx={{ margin: 0 }}>
+          <Typography variant="h4" color="text.secondary" sx={{ margin: 0 }}>
             Questions
           </Typography>
         </Grid>
