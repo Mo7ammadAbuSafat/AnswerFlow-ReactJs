@@ -1,10 +1,12 @@
-import { Button, CircularProgress, Stack, TextField } from "@mui/material";
+import { Stack, TextField } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AlertContext from "../../Components/Store/AlertProvider";
 import axios from "axios";
 import AuthContext from "../../Components/Store/AuthProvider";
 import ButtonWithLoading from "../../Components/Buttons/ButtonWithLoading";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const BasicSection = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -80,6 +82,10 @@ const BasicSection = () => {
     setIsLoading(false);
   };
 
+  const handleChange = (value) => {
+    setInputs({ ...inputs, about: value });
+  };
+
   return (
     <Stack alignItems={"center"} spacing={4}>
       <TextField
@@ -105,20 +111,24 @@ const BasicSection = () => {
         value={inputs.username}
         error={!validation.username}
       />
-      <TextField
-        sx={{
+      <ReactQuill
+        value={inputs.about}
+        onChange={handleChange}
+        style={{
           maxWidth: "450px",
           minWidth: "300px",
           width: "100%",
+          height: "150px",
+          marginBottom: "30px",
         }}
-        id="outlined-multiline-static"
-        label="Bio"
-        name="about"
-        onChange={onChange}
-        value={inputs.about}
-        multiline
-        rows={5}
       />
+
+      {/* <div
+        style={{ color: "black", "&p": { margin: 0 } }}
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
+      <div>{text.replace(/<[^>]+>/g, " ")}</div> */}
+
       <ButtonWithLoading
         onClick={onSubmit}
         isLoading={isLoading}

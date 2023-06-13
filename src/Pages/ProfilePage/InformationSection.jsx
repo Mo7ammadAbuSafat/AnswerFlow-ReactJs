@@ -19,6 +19,7 @@ import AuthContext from "../../Components/Store/AuthProvider";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import StyledHtmlText from "../../Components/General/StyledHtmlText";
 
 const InformationSection = ({ userData }) => {
   const navigate = useNavigate();
@@ -242,20 +243,9 @@ const InformationSection = ({ userData }) => {
             {followerUsers}
           </PopUpModal>
         </Stack>
-        <Typography
-          variant="body"
-          gutterBottom
-          color={"#303030"}
-          lineHeight={1.4}
-        >
-          AbuSafat <br />
-          Ya'bad ❤️
-          <br />
-          9. March .
-          <br /> "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ
-          حَسَنَةً وَقِنَا عَذَابَ النَّارِ".
-          <br /> PTUK CSE . 💚
-        </Typography>
+        <Box maxWidth={"300px"} overflow={"hidden"}>
+          <StyledHtmlText text={userData.about} />
+        </Box>
       </Grid>
     </Grid>
   );

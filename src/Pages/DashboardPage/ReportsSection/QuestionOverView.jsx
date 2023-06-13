@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import GetTime from "../../../Components/General/GetTime";
+import StyledHtmlText from "../../../Components/General/StyledHtmlText";
 
 const QuestionOverView = ({ questionId }) => {
   const [question, setQuestion] = useState(null);
@@ -43,9 +44,7 @@ const QuestionOverView = ({ questionId }) => {
         <Typography gutterBottom variant="h5" component="div">
           {question.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {question.body}
-        </Typography>
+        <StyledHtmlText text={question.body} />
         <Stack direction={"row"} spacing={1}>
           {question.tags.map((tag) => {
             return (
