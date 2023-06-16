@@ -10,9 +10,9 @@ import SavedQuestions from "./SavedQuestions";
 const SavedQuestionsPage = () => {
   return (
     <>
-      <Navbar2 selectedLabel={"Saved Questions"} />
+      <Navbar2 selectedLabel={"Saved"} />
       <ThreeColumnLayout>
-        <LeftSidebar selectedLabel={"Saved Questions"} />
+        <LeftSidebar selectedLabel={"Saved"} />
         <SavedQuestions />
         <RightSidebar>
           <PopularTags />

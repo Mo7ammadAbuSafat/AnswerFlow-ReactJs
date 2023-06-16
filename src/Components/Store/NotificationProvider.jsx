@@ -39,7 +39,7 @@ const NotificationProvider = ({ children }) => {
     if (authContext.isLoggedIn) {
       fetchData();
     }
-  }, [pageNumber, trigger]);
+  }, [pageNumber, trigger, authContext]);
 
   const markAsRead = async () => {
     await axios.put(
